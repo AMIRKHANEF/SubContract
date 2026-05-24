@@ -1,7 +1,6 @@
 function App() {
   return (
-    <div>
-      HELLO AMIR KHAN
+    <div className="w-screen h-screen">
     </div>
   )
 }
