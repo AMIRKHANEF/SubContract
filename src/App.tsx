@@ -1,6 +1,13 @@
+import Content from "./partials/Content"
+import Footer from "./partials/Footer"
+import Header from "./partials/Header"
+
 function App() {
   return (
-    <div className="w-screen h-screen">
+    <div className="extension">
+      <Header />
+      <Content />
+      <Footer />
     </div>
   )
 }
