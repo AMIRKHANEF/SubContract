@@ -2,7 +2,7 @@ import Brand from "./Brand";
 
 export default function Header() {
     return (
-        <div className="topbar">
+        <div className="header">
             <Brand />
             <div className="network-pill">
                 PAH
