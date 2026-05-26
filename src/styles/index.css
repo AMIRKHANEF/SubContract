@@ -61,7 +61,9 @@
   --text-3xs: 10px;
   --text-2xs: 11px;
   --text-xs: 12px;
+  --text-xsm: 13px;
   --text-sm: 14px;
+  --text-lmd: 15px;
   --text-md: 16px;
   --text-lg: 20px;
   --text-xl: 24px;
@@ -73,9 +75,9 @@
   --font-bold: 700;
 
   /* Line Heights */
-  --leading-tight: 1.2;
+  --leading-tight: 1;
   --leading-normal: normal;
-  --leading-relaxed: 1.7;
+  --leading-relaxed: 1.5;
 
   /*
   ----------------------------------------------------------------------
@@ -107,14 +109,11 @@
   ----------------------------------------------------------------------
   */
 
-  --shadow-sm:
-    0px 1px 2px rgba(0, 0, 0, 0.15);
+  --shadow-sm: 0px 1px 2px rgba(0, 0, 0, 0.15);
 
-  --shadow-md:
-    0px 4px 10px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0px 4px 10px rgba(0, 0, 0, 0.2);
 
-  --shadow-lg:
-    0px 8px 24px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0px 8px 24px rgba(0, 0, 0, 0.25);
 
   /*
   ----------------------------------------------------------------------
@@ -200,14 +199,14 @@ body {
 */
 
 .text-title {
-  font-size: var(--text-xl);
-  font-weight: var(--font-bold);
-  line-height: var(--leading-tight);
+  font-size: var(--text-lmd);
+  font-weight: var(--font-medium);
+  line-height: var(--leading-normal);
 }
 
 .text-section {
   font-size: var(--text-lg);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-bold);
   line-height: var(--leading-tight);
 }
 
@@ -293,8 +292,8 @@ body {
   background: var(--accent-primary);
   color: white;
 
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
+  font-size: var(--text-xsm);
+  font-weight: var(--font-semibold);
 
   cursor: pointer;
 
@@ -358,7 +357,7 @@ body {
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-md);
 
-  background: var(--bg-secondary);
+  background: var(--bg-primary);
   color: var(--text-primary);
 
   outline: none;
@@ -370,6 +369,7 @@ body {
 
 .input::placeholder {
   color: var(--text-muted);
+  font-size: var(--text-xsm);
 }
 
 .input:focus {
