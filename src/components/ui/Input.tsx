@@ -10,7 +10,7 @@ interface Props {
 export default function Input({ onChange, placeholder, style, value }: Props) {
     return (
         <input
-            className={twMerge("search-input", style)}
+            className={twMerge("input", style)}
             placeholder={placeholder}
             value={value}
             onChange={onChange}

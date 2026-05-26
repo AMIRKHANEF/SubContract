@@ -4,7 +4,7 @@ interface Props {
 
 export default function Content({ children }: Props) {
     return (
-        <div className="h-[calc(100vh-114px)] overflow-y-auto">
+        <div className="section-container">
             {children}
         </div>
     );
