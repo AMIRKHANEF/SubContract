@@ -222,6 +222,7 @@ body {
   font-size: var(--text-lmd);
   font-weight: var(--font-medium);
   line-height: var(--leading-normal);
+  user-select: none;
 }
 
 .text-section {
