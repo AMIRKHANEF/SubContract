@@ -7,7 +7,7 @@ interface Props {
 
 export default function Card({ children, style }: Props) {
     return (
-        <div className={twMerge("card", style)}>
+        <div className={twMerge("bg-bg-secondary border-default rounded-lg p-4 shadow-md card-transition hover:border-border-secondary", style)}>
             {children}
         </div>
     );
