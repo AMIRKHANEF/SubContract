@@ -42,7 +42,7 @@ body {
 }
 
 @utility section-container {
-    @apply flex flex-col gap-4.5 p-4.5 flex-1 overflow-hidden overflow-y-auto;
+    @apply flex flex-col gap-4.5 p-4.5 flex-1 overflow-hidden overflow-y-auto scrollbar-gutter-stable;
 }
 
 /*
