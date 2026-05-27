@@ -6,14 +6,14 @@ export default function Footer() {
     const version = manifest.version;
 
     return (
-        <div className="footer">
-            <p>
+        <div className="py-2.5 px-2.5 border-t border-border-primary bg-bg-quaternary backdrop-blur-[10px] shadow-md flex items-center justify-between">
+            <p className="text-text-muted text-xs">
                 {EXTENSION_NAME + " v" + version}
             </p>
 
-            <div className="footer-actions">
-                <div className="footer-link">Docs</div>
-                <div className="footer-link">GitHub</div>
+            <div className="flex gap-3">
+                <div className="text-text-muted cursor-pointer hover:text-text-primary fast-transition">Docs</div>
+                <div className="text-text-muted cursor-pointer hover:text-text-primary fast-transition">GitHub</div>
             </div>
         </div>
     );
