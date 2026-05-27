@@ -25,7 +25,6 @@ body {
 
     font-family: var(--font-family);
     font-size: var(--text-sm);
-    /* line-height: var(--leading-normal); */
 
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -38,20 +37,12 @@ body {
 ==========================================================================
 */
 
-.page-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+@utility page-container {
+    @apply flex flex-col h-screen;
 }
 
-.section-container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-5);
-    padding: var(--space-5);
-    flex: 1;
-    overflow: hidden;
-    overflow-y: auto;
+@utility section-container {
+    @apply flex flex-col gap-4.5 p-4.5 flex-1 overflow-hidden overflow-y-auto;
 }
 
 /*
@@ -83,212 +74,12 @@ body {
 ==========================================================================
 */
 
-.text-title {
-    font-size: var(--text-lmd);
-    font-weight: var(--font-medium);
-    line-height: var(--leading-normal);
-    user-select: none;
+@utility text-title {
+    @apply text-smd font-semibold leading-[1.2] select-none;
 }
 
-.text-section {
-    font-size: var(--text-lg);
-    font-weight: var(--font-bold);
-    line-height: var(--leading-tight);
-}
-
-.text-body {
-    font-size: var(--text-md);
-    font-weight: var(--font-regular);
-}
-
-.text-small {
-    font-size: var(--text-sm);
-}
-
-.text-helper {
-    font-size: var(--text-xs);
-    color: var(--text-muted);
-}
-
-/*
-==========================================================================
-  CARD COMPONENT
-==========================================================================
-*/
-
-.card {
-    background: var(--bg-secondary);
-
-    border: 1px solid var(--border-primary);
-    border-radius: var(--radius-lg);
-
-    padding: var(--space-4);
-
-    box-shadow: var(--shadow-md);
-
-    transition:
-        background var(--transition-fast),
-        border-color var(--transition-fast),
-        transform var(--transition-fast);
-}
-
-.card:hover {
-    border-color: var(--border-secondary);
-}
-
-/*
-==========================================================================
-  BUTTONS
-==========================================================================
-*/
-
-.button-primary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: var(--space-2);
-
-    height: 40px;
-
-    padding: 0 var(--space-4);
-
-    border: none;
-    border-radius: var(--radius-md);
-
-    background: var(--accent-primary);
-    color: white;
-
-    font-size: var(--text-xsm);
-    font-weight: var(--font-semibold);
-
-    cursor: pointer;
-
-    transition:
-        background var(--transition-fast),
-        transform var(--transition-fast);
-}
-
-.button-primary:hover {
-    background: var(--accent-primary-hover);
-}
-
-.button-primary:active {
-    transform: scale(0.98);
-}
-
-.button-secondary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: var(--space-2);
-
-    height: 40px;
-
-    padding: 0 var(--space-4);
-
-    border: 1px solid var(--border-primary);
-    border-radius: var(--radius-md);
-
-    background: var(--bg-secondary);
-    color: var(--text-primary);
-
-    font-size: var(--text-sm);
-    font-weight: var(--font-medium);
-
-    cursor: pointer;
-
-    transition:
-        background var(--transition-fast),
-        border-color var(--transition-fast);
-}
-
-.button-secondary:hover {
-    background: var(--bg-hover);
-    border-color: var(--border-secondary);
-}
-
-/*
-==========================================================================
-  INPUTS
-==========================================================================
-*/
-
-.input {
-    width: 100%;
-    height: 42px;
-
-    padding: 0 var(--space-3);
-
-    border: 1px solid var(--border-primary);
-    border-radius: var(--radius-md);
-
-    background: var(--bg-primary);
-    color: var(--text-primary);
-
-    outline: none;
-
-    transition:
-        border-color var(--transition-fast),
-        background var(--transition-fast);
-}
-
-.input::placeholder {
-    color: var(--text-muted);
-    font-size: var(--text-xsm);
-}
-
-.input:focus {
-    border-color: var(--accent-primary);
-    border-width: 2px;
-}
-
-/*
-==========================================================================
-  BADGES
-==========================================================================
-*/
-
-.badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 4px 10px;
-
-    border-radius: 999px;
-
-    font-size: var(--text-xs);
-    font-weight: var(--font-medium);
-}
-
-.badge-success {
-    background: rgba(34, 197, 94, 0.15);
-    color: var(--success);
-}
-
-.badge-warning {
-    background: rgba(245, 158, 11, 0.15);
-    color: var(--warning);
-}
-
-.badge-error {
-    background: rgba(239, 68, 68, 0.15);
-    color: var(--error);
-}
-
-/*
-==========================================================================
-  DIVIDER
-==========================================================================
-*/
-
-.divider {
-    width: 100%;
-    height: 1px;
-
-    background: var(--border-primary);
+@utility text-section {
+    @apply text-lg font-bold leading-none;
 }
 
 /*
@@ -302,9 +93,9 @@ body {
     align-items: center;
     justify-content: space-between;
 
-    gap: var(--space-3);
+    gap: 12px;
 
-    padding: var(--space-3);
+    padding: 12px;
 
     border-radius: var(--radius-md);
 
@@ -321,28 +112,39 @@ body {
 ==========================================================================
 */
 
-.text-primary {
-    color: var(--text-primary);
+@utility border-default {
+    @apply border border-border-primary;
 }
 
-.text-secondary {
-    color: var(--text-secondary);
+@utility border-secondary {
+    @apply border border-border-secondary;
 }
 
-.text-muted {
-    color: var(--text-muted);
+@utility brand-icon-bg {
+    background: linear-gradient(135deg, #e6007a, #8b5cf6);
 }
 
-.border-default {
-    border: 1px solid var(--border-primary);
+@utility fast-transition {
+    transition: all var(--transition-quick);
 }
 
-.bg-secondary {
-    background: var(--bg-secondary);
+@utility card-transition {
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast);
 }
 
-.bg-tertiary {
-    background: var(--bg-tertiary);
+@utility button-transition {
+    transition:
+        background var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+@utility input-transition {
+    transition:
+        border-color var(--transition-fast),
+        background var(--transition-fast);
 }
 
 /*
@@ -365,92 +167,4 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-/*
-==========================================================================
-  Header
-==========================================================================
-*/
-
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 18px;
-
-    border-bottom: 1px solid var(--border-primary);
-
-    background: rgba(255, 255, 255, 0.02);
-    backdrop-filter: blur(10px);
-
-    box-shadow: var(--shadow-md);
-}
-
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.brand-icon {
-    width: 38px;
-    height: 38px;
-
-    border-radius: 12px;
-
-    background: linear-gradient(135deg, #e6007a, #8b5cf6);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-weight: 700;
-    font-size: 15px;
-    color: white;
-}
-
-.brand-title {
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: -0.3px;
-}
-
-.brand-subtitle {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 2px;
-}
-
-/*
-==========================================================================
-  Footer
-==========================================================================
-*/
-
-.footer {
-    padding: 10px 18px;
-    border-top: 1px solid var(--border-primary);
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    color: var(--text-muted);
-    font-size: 12px;
-}
-
-.footer-actions {
-    display: flex;
-    gap: 12px;
-}
-
-.footer-link {
-    cursor: pointer;
-    transition: 150ms ease;
-}
-
-.footer-link:hover {
-    color: var(--text-primary);
 }

@@ -5,122 +5,98 @@
 */
 
 :root {
-    /*
+  /*
   ----------------------------------------------------------------------
     COLORS
   ----------------------------------------------------------------------
   */
 
-    /* Backgrounds */
-    --bg-primary: #0f172a;
-    --bg-secondary: #111827;
-    --bg-tertiary: #1f2937;
-    --bg-quaternary: #ffffff05;
-    --bg-hover: #243244;
-    --bg-quaternary-hover: #ffffff0a;
+  /* Backgrounds */
+  --bg-primary: #0f172a;
+  --bg-secondary: #111827;
+  --bg-tertiary: #1f2937;
+  --bg-quaternary: #ffffff05;
+  --bg-hover: #243244;
+  --bg-quaternary-hover: #ffffff0a;
 
-    /* Borders */
-    --border-primary: #1f2937;
-    --border-secondary: #2d3748;
+  /* Borders */
+  --border-primary: #1f2937;
+  --border-secondary: #2d3748;
 
-    /* Text */
-    --text-primary: #f9fafb;
-    --text-secondary: #9ca3af;
-    --text-muted: #6b7280;
+  /* Text */
+  --text-primary: #f9fafb;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
 
-    /* Accent */
-    --accent-primary: #e6007a;
-    --accent-primary-hover: #ff0a8a;
+  /* Accent */
+  --accent-primary: #e6007a;
+  --accent-primary-hover: #ff0a8a;
 
-    /* States */
-    --success: #22c55e;
-    --warning: #f59e0b;
-    --error: #ef4444;
-    --info: #3b82f6;
+  /* States */
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
 
-    /*
+  /*
   ----------------------------------------------------------------------
     TYPOGRAPHY
   ----------------------------------------------------------------------
   */
 
-    --font-family:
-        Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
-    /* Font Sizes */
-    --text-3xs: 10px;
-    --text-2xs: 11px;
-    --text-xs: 12px;
-    --text-xsm: 13px;
-    --text-sm: 14px;
-    --text-lmd: 15px;
-    --text-md: 16px;
-    --text-lg: 20px;
-    --text-xl: 24px;
+  /* Font Sizes */
+  --text-3xs: 10px;
+  --text-2xs: 11px;
+  --text-xs: 12px;
+  --text-xsm: 13px;
+  --text-sm: 14px;
+  --text-smd: 15px;
+  --text-md: 16px;
+  --text-lmd: 18px;
+  --text-lg: 20px;
+  --text-xl: 24px;
 
-    /* Font Weights */
-    --font-regular: 400;
-    --font-medium: 500;
-    --font-semibold: 600;
-    --font-bold: 700;
-
-    /* Line Heights */
-    --leading-tight: 1;
-    --leading-normal: normal;
-    --leading-relaxed: 1.5;
-
-    /*
-  ----------------------------------------------------------------------
-    SPACING SYSTEM
-  ----------------------------------------------------------------------
-  */
-
-    --space-1: 4px;
-    --space-2: 8px;
-    --space-3: 12px;
-    --space-4: 16px;
-    --space-5: 18px;
-    --space-6: 24px;
-
-    /*
+  /*
   ----------------------------------------------------------------------
     RADIUS
   ----------------------------------------------------------------------
   */
 
-    --radius-sm: 8px;
-    --radius-md: 10px;
-    --radius-lg: 12px;
-    --radius-xl: 14px;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 14px;
 
-    /*
+  /*
   ----------------------------------------------------------------------
     SHADOWS
   ----------------------------------------------------------------------
   */
 
-    --shadow-sm: 0px 1px 2px rgba(0, 0, 0, 0.15);
+  --shadow-sm: 0px 1px 2px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0px 8px 24px rgba(0, 0, 0, 0.25);
 
-    --shadow-md: 0px 4px 10px rgba(0, 0, 0, 0.2);
-
-    --shadow-lg: 0px 8px 24px rgba(0, 0, 0, 0.25);
-
-    /*
+  /*
   ----------------------------------------------------------------------
    TRANSITIONS
   ----------------------------------------------------------------------
   */
 
-    --transition-fast: 120ms ease;
-    --transition-normal: 180ms ease;
-    --transition-slow: 250ms ease;
+  --transition-fast: 120ms ease;
+  --transition-quick: 150ms ease;
+  --transition-normal: 180ms ease;
+  --transition-slow: 250ms ease;
 
-    /*
+  /*
   ----------------------------------------------------------------------
     LAYOUT
   ----------------------------------------------------------------------
   */
 
-    --popup-width: 420px;
-    --popup-min-height: 600px;
+  --popup-width: 420px;
+  --popup-min-height: 600px;
 }

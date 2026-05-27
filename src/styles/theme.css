@@ -5,83 +5,70 @@
 */
 
 @theme {
-    /*
+  /*
   ----------------------------------------------------------------------
     COLORS
   ----------------------------------------------------------------------
   */
 
-    --color-bg-primary: var(--bg-primary);
-    --color-bg-secondary: var(--bg-secondary);
-    --color-bg-tertiary: var(--bg-tertiary);
-    --color-bg-quaternary: var(--bg-quaternary);
-    --color-bg-hover: var(--bg-hover);
-    --color-bg-quaternary-hover: var(--bg-quaternary-hover);
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-tertiary: var(--bg-tertiary);
+  --color-bg-quaternary: var(--bg-quaternary);
+  --color-bg-hover: var(--bg-hover);
+  --color-bg-quaternary-hover: var(--bg-quaternary-hover);
 
-    --color-border-primary: var(--border-primary);
-    --color-border-secondary: var(--border-secondary);
+  --color-border-primary: var(--border-primary);
+  --color-border-secondary: var(--border-secondary);
 
-    --color-text-primary: var(--text-primary);
-    --color-text-secondary: var(--text-secondary);
-    --color-text-muted: var(--text-muted);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
 
-    --color-accent-primary: var(--accent-primary);
-    --color-accent-primary-hover: var(--accent-primary-hover);
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-primary-hover: var(--accent-primary-hover);
 
-    --color-success: var(--success);
-    --color-warning: var(--warning);
-    --color-error: var(--error);
-    --color-info: var(--info);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
 
-    /*
+  /*
   ----------------------------------------------------------------------
     TYPOGRAPHY
   ----------------------------------------------------------------------
   */
 
-    --font-sans: var(--font-family);
+  --font-sans: var(--font-family);
 
-    --text-3xs: var(--text-3xs);
-    --text-2xs: var(--text-2xs);
-    --text-xs: var(--text-xs);
-    --text-xsm: var(--text-xsm);
-    --text-sm: var(--text-sm);
-    --text-lmd: var(--text-lmd);
-    --text-md: var(--text-md);
-    --text-lg: var(--text-lg);
-    --text-xl: var(--text-xl);
+  --text-3xs: var(--text-3xs);
+  --text-2xs: var(--text-2xs);
+  --text-xs: var(--text-xs);
+  --text-xsm: var(--text-xsm);
+  --text-sm: var(--text-sm);
+  --text-smd: var(--text-smd);
+  --text-md: var(--text-md);
+  --text-lg: var(--text-lg);
+  --text-xl: var(--text-xl);
 
-    /*
-  ----------------------------------------------------------------------
-    SPACING
-  ----------------------------------------------------------------------
-  */
-
-    --spacing-1: var(--space-1);
-    --spacing-2: var(--space-2);
-    --spacing-3: var(--space-3);
-    --spacing-4: var(--space-4);
-    --spacing-5: var(--space-5);
-    --spacing-6: var(--space-6);
-
-    /*
+  /*
   ----------------------------------------------------------------------
     RADIUS
   ----------------------------------------------------------------------
   */
 
-    --radius-sm: var(--radius-sm);
-    --radius-md: var(--radius-md);
-    --radius-lg: var(--radius-lg);
-    --radius-xl: var(--radius-xl);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
 
-    /*
+  /*
   ----------------------------------------------------------------------
     SHADOWS
   ----------------------------------------------------------------------
   */
 
-    --shadow-sm: var(--shadow-sm);
-    --shadow-md: var(--shadow-md);
-    --shadow-lg: var(--shadow-lg);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
 }
