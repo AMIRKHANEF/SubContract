@@ -1,3 +1,4 @@
+import Utilities from "./components/Utilities"
 import WatchContract from "./components/WatchContract"
 import Content from "./partials/Content"
 import Footer from "./partials/Footer"
@@ -9,6 +10,7 @@ function App() {
       <Header />
       <Content>
         <WatchContract />
+        <Utilities />
       </Content>
       <Footer />
     </div>
