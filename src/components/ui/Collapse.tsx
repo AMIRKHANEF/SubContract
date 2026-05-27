@@ -12,16 +12,17 @@ export default function Collapse({ children, collapseChildren, withChevron }: Pr
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     return (
-        <Card>
+        <Card style='p-0'>
             {/* Header / Trigger */}
             <div
-                className={'relative cursor-pointer -m-4.5 p-4.5' + (isOpen ? ' pb-0 mb-0' : '')}
+                className={'relative cursor-pointer p-4.5'}
                 onClick={() => setIsOpen(!isOpen)}
             >
                 {collapseChildren}
                 {withChevron &&
                     <ChevronDownIcon
-                        className={`absolute right-5 top-4 text-(--accent-primary) transform transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                        className={`absolute right-5 top-4 text-(--accent-primary) transform transition-transform
+                            ${isOpen ? 'rotate-180' : ''}`}
                         fontSize={20}
                     />
                 }
@@ -29,9 +30,12 @@ export default function Collapse({ children, collapseChildren, withChevron }: Pr
 
             {/* Content Area */}
             <div
-                className={`transition-all duration-normal ease-in-out ${isOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}
+                className={`transition-all duration-normal ease-in-out px-4.5
+                    ${isOpen ? 'pb-4.5 max-h-screen opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}
             >
-                {children}
+                <div className=''>
+                    {children}
+                </div>
             </div>
         </Card>
     );
