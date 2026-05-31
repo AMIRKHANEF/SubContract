@@ -1,5 +1,4 @@
 <div align="center">
-
 <img src="https://img.shields.io/badge/status-in%20development-ff69b4?style=for-the-badge" alt="Status: In Development"/>
 <img src="https://img.shields.io/badge/built%20for-Polkadot%20Asset%20Hub-E6007A?style=for-the-badge&logo=polkadot&logoColor=white" alt="Built for Polkadot Asset Hub"/>
 <img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="MIT License"/>
@@ -7,10 +6,11 @@
 <br/><br/>
 
 ```
-                        / ___| _   _| |__  / ___|___  _ __ | |_ _ __ __ _  ___| |_
-                        \___ \| | | | '_ \| |   / _ \| '_ \| __| '__/ _` |/ __| __|
-                         ___) | |_| | |_) | |__| (_) | | | | |_| | | (_| | (__| |_
-                        |____/ \__,_|_.__/ \____\___/|_| |_|\__|_|  \__,_|\___|\__|
+ ____        _      ____            _                  _
+/ ___| _   _| |__  / ___|___  _ __ | |_ _ __ __ _  ___| |_
+\___ \| | | | '_ \| |   / _ \| '_ \| __| '__/ _` |/ __| __|
+ ___) | |_| | |_) | |__| (_) | | | | |_| | | (_| | (__| |_
+|____/ \__,_|_.__/ \____\___/|_| |_|\__|_|  \__,_|\___|\__|
 ```
 
 **A browser-native Solidity smart contract workspace for Polkadot developers.**
@@ -76,7 +76,6 @@ SubContract collapses that workflow into a single, persistent browser companion.
 | **Persistence** | Chrome `localStorage` + `chrome.storage.local` |
 | **Styling** | [Tailwind CSS](https://tailwindcss.com) . [Headless UI](https://headlessui.com) |
 | **EVM / Blockchain** | [viem](https://viem.sh) — modern, TypeScript-first EVM library |
-<!-- | **Polkadot** | [@polkadot/util-crypto](https://polkadot.js.org/docs/util-crypto) — for SS58/H160 conversions | -->
 | **Data Sources** | [@polkadot-api](papi.how) (primary), [SubScan API](https://pro.subscan.io) |
 
 ### Architecture principles
