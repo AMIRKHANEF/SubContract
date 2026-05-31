@@ -42,7 +42,8 @@ body {
 }
 
 @utility section-container {
-    @apply flex flex-col gap-4.5 p-4.5 flex-1 overflow-hidden overflow-y-auto scrollbar-gutter-stable;
+    /* right padding is 4px less than others because the scroll bar width is already calculated */
+    @apply flex flex-col gap-4.5 p-4.5 flex-1 overflow-hidden overflow-y-auto scrollbar-gutter-stable pr-3.5;
 }
 
 /*
@@ -52,7 +53,7 @@ body {
 */
 
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 4px;
 }
 
 ::-webkit-scrollbar-track {
