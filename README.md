@@ -32,7 +32,7 @@ Polkadot's EVM environment is not Ethereum. There are meaningful differences in 
 
 SubContract collapses that workflow into a single, persistent browser companion. It knows the difference between an SS58 and an H160 address. It understands Asset Hub precompiles. It warns you about concepts like existential deposit that simply don't exist on Ethereum. And it does all of this without requiring a login, a private key, a backend, or a subscription.
 
-> **Background:** SubContract is being developed by [Amir](https://github.com/your-github), a former core developer of [PolkaGate](https://polkagate.xyz) — an open-source wallet extension for the Polkadot ecosystem. This project is being prepared for a Polkadot Treasury funding proposal.
+> **Background:** SubContract is being developed by [Amir](https://github.com/AMIRKHANEF), a former core developer of [PolkaGate](https://polkagate.xyz) — an open-source wallet extension for the Polkadot ecosystem. This project is being prepared for a Polkadot Treasury funding proposal.
 
 ---
 
@@ -109,7 +109,7 @@ These features are unique to SubContract and do not exist in any other developer
 **1. Clone the repository**
 
 ```bash
-git clone https://github.com/your-github/subcontract.git
+git clone https://github.com/AMIRKHANEF/subcontract.git
 cd subcontract
 ```
 
