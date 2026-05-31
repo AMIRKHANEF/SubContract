@@ -14,6 +14,6 @@ export default function Divider({ orientation = 'horizontal', style }: Props) {
 }
 
 const DividerStyle = {
-    horizontal: "w-full h-px bg-border-primary",
-    vertical: "w-px h-full bg-border-primary"
+    horizontal: "w-full h-px text-border-secondary",
+    vertical: "w-px h-full text-border-secondary"
 };
