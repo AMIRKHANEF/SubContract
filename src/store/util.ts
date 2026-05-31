@@ -1,0 +1,35 @@
+import { STORAGE_KEY } from "@/utils/constants";
+import type { RootState } from "./types";
+
+// ─── Save ─────────────────────────────────────────────────────────────────────
+
+export function saveStateToStorage(state: RootState): void {
+    try {
+        const serialized = JSON.stringify(state);
+
+        localStorage.setItem(STORAGE_KEY, serialized);
+    } catch (err) {
+        console.error("[STORAGE] Failed to save state:", err);
+    }
+}
+
+// ─── Load ─────────────────────────────────────────────────────────────────────
+
+export function loadStateFromStorage(): Partial<RootState> | undefined {
+    try {
+        const serialized = localStorage.getItem(STORAGE_KEY);
+
+        if (!serialized) return undefined;
+
+        return JSON.parse(serialized) as Partial<RootState>;
+    } catch (err) {
+        console.error("[STORAGE] Failed to load state:", err);
+        return undefined;
+    }
+}
+
+// ─── Clear ────────────────────────────────────────────────────────────────────
+
+export function clearStorage(): void {
+    localStorage.removeItem(STORAGE_KEY);
+}
