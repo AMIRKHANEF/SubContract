@@ -6,8 +6,14 @@ import { useCallback, useState } from "react";
 import { isValidContractAddr } from "@/utils/utils";
 import { useContracts, useNetwork } from "@/hooks/useStore";
 import type { Contract } from "@/store/types";
+import { Settings } from 'lucide-react';
+import { PopUps } from "@/utils/constants";
 
-export default function WatchContract() {
+interface Props {
+    setPopup: (popup: PopUps) => void;
+}
+
+export default function WatchContract({ setPopup }: Props) {
     const { selectedChain } = useNetwork();
     const { addWatchedContract, setActiveContract } = useContracts();
 
@@ -42,7 +48,7 @@ export default function WatchContract() {
                 onChange={handleInputChange}
                 value={contractAddr}
             />
-            <div className="flex flex-row gap-3.5">
+            <div className="flex flex-row gap-3">
                 <Button
                     onClick={handleAddContract}
                     title="Add To Watchlist"
@@ -50,8 +56,8 @@ export default function WatchContract() {
                     style="flex-1"
                 />
                 <Button
-                    onClick={() => null}
-                    title="⚙"
+                    onClick={() => setPopup(PopUps.ContractSettings)}
+                    Icon={<Settings className="text-text-secondary" size={18} />}
                     type="secondary"
                 />
             </div>
