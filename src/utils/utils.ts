@@ -1,3 +1,5 @@
+import { isEthereumAddress } from '@polkadot/util-crypto'
+
 export const sanitizeChainName = (chainName: string | undefined) => {
     if (!chainName) {
         return chainName;
@@ -14,4 +16,14 @@ export const sanitizeChainName = (chainName: string | undefined) => {
         .replace(/\s/g, '');
 
     return sanitizedChainName;
+};
+
+export const isValidContractAddr = (contractAddr: string | undefined) => {
+    if (!contractAddr) return false;
+
+    const hexCheck = contractAddr.startsWith('0x');
+    const lengthCheck = contractAddr.length === 42;
+    const isEthereumAddr = isEthereumAddress(contractAddr);
+
+    return hexCheck && lengthCheck && isEthereumAddr;
 };
