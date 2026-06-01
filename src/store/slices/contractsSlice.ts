@@ -18,17 +18,24 @@ const contractsSlice = createSlice({
         },
         addWatchedContract(state, action: PayloadAction<Contract>) {
             const exists = state.watchedContracts.some(
-                (c) => c.address === action.payload.address && c.chainId === action.payload.chainId
+                (c) => c.address === action.payload.address && c.chainGenesisHash === action.payload.chainGenesisHash
             );
 
             if (!exists) {
                 state.watchedContracts.push(action.payload);
             }
         },
-        removeWatchedContract(state, action: PayloadAction<{ address: string; chainId: string }>) {
+        removeWatchedContract(state, action: PayloadAction<Contract>) {
+            const toRemoveAddr = action.payload.address;
+            const toRemoveChain = action.payload.chainGenesisHash;
+
+            if (state.activeContract?.address === toRemoveAddr && state.activeContract.chainGenesisHash === toRemoveChain) {
+                state.activeContract = null;
+            }
+
             state.watchedContracts = state.watchedContracts.filter(
                 (c) =>
-                    !(c.address === action.payload.address && c.chainId === action.payload.chainId)
+                    !(c.address === action.payload.address && c.chainGenesisHash === action.payload.chainGenesisHash)
             );
         },
         clearWatchedContracts(state) {
