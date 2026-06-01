@@ -11,7 +11,7 @@ export default function Brand() {
                 <div className="text-lmd font-bold">
                     {EXTENSION_NAME}
                 </div>
-                <div className="font-xs text-text-muted mt-0.5">
+                <div className="text-xs font-normal text-text-muted mt-0.5">
                     Smart Contract Workspace
                 </div>
             </div>

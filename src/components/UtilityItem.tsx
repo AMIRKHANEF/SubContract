@@ -16,10 +16,10 @@ export default function UtilityItem({ description, icon, onClick, title }: Props
             onClick={onClick}
         >
             <div className="utility-icon">{icon}</div>
-            <p className="mt-3 text-sm font-semibold">
+            <p className="mt-1 text-sm font-semibold">
                 {title}
             </p>
-            <p className="mt-1 text-xsm font-thin">
+            <p className="mt-0.5 text-xs font-light text-text-secondary">
                 {description}
             </p>
         </div>

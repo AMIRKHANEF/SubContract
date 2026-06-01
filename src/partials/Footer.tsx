@@ -6,7 +6,7 @@ export default function Footer() {
     const version = manifest.version;
 
     return (
-        <div className="py-2.5 px-2.5 border-t border-border-primary bg-bg-quaternary backdrop-blur-[10px] shadow-md flex items-center justify-between">
+        <div className="py-1.5 px-2.5 border-t border-border-primary bg-bg-quaternary backdrop-blur-[10px] shadow-md flex items-center justify-between">
             <p className="text-text-muted text-xs">
                 {EXTENSION_NAME + " v" + version}
             </p>
