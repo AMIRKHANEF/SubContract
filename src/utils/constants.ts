@@ -31,3 +31,11 @@ export const SUPPORTED_CHAINS = [
     POLKADOT_ASSET_HUB_CHAIN,
     PASEO_ASSET_HUB_CHAIN
 ] as const;
+
+export enum PopUps {
+    None,
+    ContractSettings,
+    GasHelper,
+    SelectorLookUp,
+    AbiViewer
+}
