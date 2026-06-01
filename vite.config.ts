@@ -17,6 +17,10 @@ export default defineConfig({
       input: {
         index: "index.html", // popup HTML
       },
+      onwarn(warning, warn) {
+        if (warning.code === 'INVALID_ANNOTATION') return;
+        warn(warning);
+      }
     },
   },
   resolve: {
@@ -24,4 +28,12 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  optimizeDeps: {
+    include: [
+      '@polkadot/api',
+      '@polkadot/api-derive',
+      '@polkadot/types-codec',
+      '@polkadot/x-global',
+    ]
+  }
 });
