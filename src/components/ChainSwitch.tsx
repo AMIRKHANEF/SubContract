@@ -4,8 +4,14 @@ import Divider from './ui/Divider';
 import { useNetwork } from '@/hooks/useStore';
 import { useCallback } from 'react';
 import type { Chain } from '@/utils/types';
+import { twMerge } from 'tailwind-merge';
 
-function ChainItem({ chain }: { chain: Chain }) {
+interface ChainItemProps {
+    chain: Chain;
+    isSelected: boolean;
+}
+
+function ChainItem({ chain, isSelected }: ChainItemProps) {
     const close = useClose();
     const { setSelectedChain } = useNetwork();
 
@@ -17,7 +23,9 @@ function ChainItem({ chain }: { chain: Chain }) {
     return (
         <div
             onClick={handleClick}
-            className="rounded-sm p-3 w-full cursor-pointer hover:bg-bg-hover hover:text-accent-primary fast-transition"
+            className={twMerge("rounded-sm p-3 w-full cursor-pointer hover:bg-bg-hover hover:text-accent-primary-hover fast-transition",
+                isSelected ? 'text-accent-primary' : ''
+            )}
         >
             {chain.fullName}
         </div>
@@ -46,12 +54,20 @@ export default function ChainSwitch() {
                     ease-in-out data-closed:opacity-0 shadow-2xl p-2 gap-1"
                 transition
             >
-                {SUPPORTED_CHAINS.map((item, index) => (
-                    <>
-                        <ChainItem key={index} chain={item} />
-                        {(SUPPORTED_CHAINS.length - 1 > index) && <Divider orientation='horizontal' />}
-                    </>
-                ))}
+                {SUPPORTED_CHAINS.map((item, index) => {
+                    const isSelected = item.genesisHash === selectedChain?.genesisHash;
+
+                    return (
+                        <>
+                            <ChainItem
+                                key={index}
+                                chain={item}
+                                isSelected={isSelected}
+                            />
+                            {(SUPPORTED_CHAINS.length - 1 > index) && <Divider orientation='horizontal' />}
+                        </>
+                    )
+                })}
             </PopoverPanel>
         </Popover>
     );
