@@ -1,0 +1,24 @@
+{
+  "version": 0,
+  "descriptorPath": ".papi\\descriptors",
+  "entries": {
+    "dot": {
+      "chain": "polkadot",
+      "metadata": ".papi\\metadata\\dot.scale",
+      "genesis": "0x91b171bb158e2d3848fa23a9f1c25182fb8e20313b2c1eb49219da7a70ce90c3",
+      "codeHash": "0x6e8df549e3c17a4aa26693347b7b9146ea5966e3a56f7ce9d0df4a37d6702778"
+    },
+    "pah": {
+      "chain": "polkadot_asset_hub",
+      "metadata": ".papi\\metadata\\pah.scale",
+      "genesis": "0x68d56f15f85d3136970ec16946040bc1752654e906147f7e43e9d539d7c3de2f",
+      "codeHash": "0x62631e64fcf53d18e4064adea71a556aeff18519d8c8a5d71711e1e1b3ab2fcc"
+    },
+    "paseoah": {
+      "chain": "paseo_asset_hub",
+      "metadata": ".papi\\metadata\\paseoah.scale",
+      "genesis": "0xd6eec26135305a8ad257a20d003357284c8aa03d0bdb2b357ab0a22371e11ef2",
+      "codeHash": "0x9d992d08bc7b2117f7899cd3b003e0d2bce57d81d01aec0a1c6b6284483c3950"
+    }
+  }
+}
