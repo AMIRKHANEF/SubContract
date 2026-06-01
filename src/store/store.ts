@@ -3,6 +3,7 @@ import networkReducer from "./slices/networkSlice";
 import contractsReducer from "./slices/contractsSlice";
 import accountsReducer from "./slices/accountsSlice";
 import { loadStateFromStorage, saveStateToStorage } from "./util";
+import { COLD_START_STATE } from "./cold-start";
 
 // ─── Preload from localStorage ────────────────────────────────────────────────
 
