@@ -27,3 +27,7 @@ export const isValidContractAddr = (contractAddr: string | undefined) => {
 
     return hexCheck && lengthCheck && isEthereumAddr;
 };
+
+export const toShortAddress = (addr: string, count: number = 4) => {
+    return addr.slice(0, count) + '...' + addr.slice(-count);
+}
