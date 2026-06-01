@@ -2,7 +2,8 @@ import { useAppSelector, useAppDispatch } from "./useAppStore";
 import { setSelectedChain, clearSelectedChain } from "../store/slices/networkSlice";
 import { setActiveContract, clearActiveContract, addWatchedContract, removeWatchedContract, } from "../store/slices/contractsSlice";
 import { setAccounts, addAccount, removeAccount, setActiveAccount, clearActiveAccount, } from "../store/slices/accountsSlice";
-import type { Chain, Contract, Account } from "../store/types";
+import type { Contract, Account } from "../store/types";
+import type { Chain } from "@/utils/types";
 
 // ─── Network ──────────────────────────────────────────────────────────────────
 
