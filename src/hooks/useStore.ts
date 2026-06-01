@@ -31,8 +31,7 @@ export function useContracts() {
         setActiveContract: (contract: Contract) => dispatch(setActiveContract(contract)),
         clearActiveContract: () => dispatch(clearActiveContract()),
         addWatchedContract: (contract: Contract) => dispatch(addWatchedContract(contract)),
-        removeWatchedContract: (address: string, chainId: string) =>
-            dispatch(removeWatchedContract({ address, chainId })),
+        removeWatchedContract: (contract: Contract) => dispatch(removeWatchedContract(contract)),
     };
 }
 
