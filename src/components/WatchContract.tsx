@@ -18,17 +18,19 @@ export default function WatchContract({ setPopup }: Props) {
     const { addWatchedContract, setActiveContract } = useContracts();
 
     const [contractAddr, setContractAddr] = useState<string | undefined>();
+    const [badContractAddr, setError] = useState<boolean>(false);
 
     const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement, Element>) => {
         const addr = e.target.value;
 
-        if (!isValidContractAddr(addr)) return;
+        if (!isValidContractAddr(addr)) setError(true);
+        if (!addr || isValidContractAddr(addr)) setError(false);
 
         setContractAddr(addr);
     }, []);
 
     const handleAddContract = useCallback(() => {
-        if (!contractAddr || !selectedChain) return;
+        if (!contractAddr || !selectedChain || badContractAddr) return;
 
         const contract: Contract = {
             address: contractAddr,
@@ -38,7 +40,7 @@ export default function WatchContract({ setPopup }: Props) {
         addWatchedContract(contract);
         setActiveContract(contract);
         setContractAddr("");
-    }, [addWatchedContract, contractAddr, selectedChain, setActiveContract]);
+    }, [addWatchedContract, badContractAddr, contractAddr, selectedChain, setActiveContract]);
 
     return (
         <Card style="flex flex-col gap-3.5">
@@ -47,6 +49,9 @@ export default function WatchContract({ setPopup }: Props) {
                 placeholder="Paste contract address..."
                 onChange={handleInputChange}
                 value={contractAddr}
+                onEnter={handleAddContract}
+                error={badContractAddr}
+                showPasteIcon
             />
             <div className="flex flex-row gap-3">
                 <Button
