@@ -75,12 +75,12 @@ body {
 ==========================================================================
 */
 
-@utility text-title {
+@utility text-section {
     @apply text-smd font-semibold leading-[1.2] select-none;
 }
 
-@utility text-section {
-    @apply text-lg font-bold leading-none;
+@utility text-title {
+    @apply text-lg font-bold leading-none text-center my-2.5;
 }
 
 /*
@@ -148,6 +148,10 @@ body {
         background var(--transition-fast);
 }
 
+@utility input-icon {
+    @apply text-text-secondary cursor-pointer hover:bg-bg-hover rounded-full p-1.5 w-fit h-fit;
+}
+
 /*
 ==========================================================================
   ANIMATIONS
@@ -168,4 +172,26 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+@keyframes wiggle {
+    0% { transform: translateX(0); }
+
+    15% { transform: translateX(-6px); }
+
+    30% { transform: translateX(6px); }
+
+    45% { transform: translateX(-4px); }
+
+    60% { transform: translateX(4px); }
+
+    75% { transform: translateX(-2px); }
+
+    90% { transform: translateX(2px); }
+
+    100% { transform: translateX(0); }
+}
+
+@utility input-wiggle {
+    animation: wiggle 0.45s ease-in-out;
 }

@@ -4,7 +4,7 @@ interface Props {
 
 export default function SectionTitle({ text }: Props) {
     return (
-        <p className="text-title">
+        <p className="text-section">
             {text}
         </p>
     );
