@@ -15,13 +15,13 @@ export function saveStateToStorage(state: RootState): void {
 
 // ─── Load ─────────────────────────────────────────────────────────────────────
 
-export function loadStateFromStorage(): Partial<RootState> | undefined {
+export function loadStateFromStorage(): RootState | undefined {
     try {
         const serialized = localStorage.getItem(STORAGE_KEY);
 
         if (!serialized) return undefined;
 
-        return JSON.parse(serialized) as Partial<RootState>;
+        return JSON.parse(serialized) as RootState;
     } catch (err) {
         console.error("[STORAGE] Failed to load state:", err);
         return undefined;
