@@ -1,5 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { NetworkState, Chain } from "../types";
+import type { NetworkState } from "../types";
+import type { Chain } from "@/utils/types";
 
 const initialState: NetworkState = {
     selectedChain: null,
