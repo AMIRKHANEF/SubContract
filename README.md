@@ -144,12 +144,12 @@ pnpm dev
 The first release focuses on establishing the fundamental workflow: watch contracts, understand them, and have the right utility tools always at hand.
 
 - [x] Project scaffolding and architecture
-- [x] Chain selector (Asset Hub mainnet + Westend testnet)
-- [ ] Contract watchlist with local persistence
+- [x] Chain selector (Asset Hub mainnet + Paseo testnet)
+- [x] Contract watchlist with local persistence
+- [ ] SS58 ↔ H160 address converter
 - [ ] Contract dashboard (verification, deployer, stats)
 - [ ] ABI viewer with search and copy
 - [ ] Recent activity feed with decoded function names
-- [ ] SS58 ↔ H160 address converter
 - [ ] Function selector decoder
 - [ ] Event topic hash lookup
 - [ ] Calldata decoder
