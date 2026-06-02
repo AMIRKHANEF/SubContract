@@ -13,11 +13,18 @@ export default function ContractSettings({ setPopup }: { setPopup: React.Dispatc
         watchedContracts.filter(({ chainGenesisHash }) => chainGenesisHash === selectedChain?.genesisHash), [selectedChain?.genesisHash, watchedContracts]);
 
     return (
-        <div className="flex flex-col w-[80vw] py-3 px-4.5">
+        <div className="flex flex-col w-[90vw] p-4.5 pt-3">
+            <p className="text-title">
+                Contracts Setting
+            </p>
+            <Divider style="my-2.5" />
+            <p className="text-sm font-extralight text-text-primary px-2.5 py-4 mb-2.5">
+                Select an active smart contract by starring it, or remove one from the list.
+            </p>
             {contractsOnChain.length > 0 &&
                 <>
                     <p className="text-smd font-light text-text-primary mb-2.5">Contracts on selected chain:</p>
-                    <div className="bg-bg-tertiary flex flex-col gap-2 rounded-md p-1.5">
+                    <div className="bg-bg-quinary flex flex-col gap-2 rounded-md p-1.5 max-h-62.5 overflow-auto">
                         {contractsOnChain.map((contract, index) => {
                             const isActive = activeContract?.address === contract.address;
 
@@ -42,7 +49,7 @@ export default function ContractSettings({ setPopup }: { setPopup: React.Dispatc
                 onClick={() => setPopup(PopUps.None)}
                 type="primary"
                 title="Done"
-                style="mt-3.5"
+                style="mt-5"
             />
         </div>
     );
