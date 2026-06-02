@@ -15,8 +15,9 @@
   --color-bg-secondary: var(--bg-secondary);
   --color-bg-tertiary: var(--bg-tertiary);
   --color-bg-quaternary: var(--bg-quaternary);
-  --color-bg-hover: var(--bg-hover);
   --color-bg-quaternary-hover: var(--bg-quaternary-hover);
+  --color-bg-quinary: var(--bg-quinary);
+  --color-bg-hover: var(--bg-hover);
 
   --color-border-primary: var(--border-primary);
   --color-border-secondary: var(--border-secondary);
