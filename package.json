@@ -13,6 +13,7 @@
     "@headlessui/react": "^2.2.10",
     "@polkadot-api/descriptors": "file:.papi\\descriptors",
     "@polkadot/networks": "^14.0.3",
+    "@polkadot/ui-keyring": "^3.16.7",
     "@polkadot/util": "^14.0.3",
     "@polkadot/util-crypto": "^14.0.3",
     "@polkagate/apps-config": "^2.2.0",
