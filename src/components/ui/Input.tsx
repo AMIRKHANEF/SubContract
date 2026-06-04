@@ -1,5 +1,4 @@
 import { ClipboardList, ClipboardX } from "lucide-react"
-import { useCallback, useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface Props {
@@ -13,13 +12,13 @@ interface Props {
 }
 
 export default function Input({ onChange, onEnter, placeholder, className, value, error = false, showPasteIcon = false, }: Props) {
-    const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && onEnter) {
             onEnter();
         }
-    }, [onEnter]);
+    };
 
-    const handlePaste = useCallback(async () => {
+    const handlePaste = async () => {
         try {
             const text = await navigator.clipboard.readText();
 
@@ -27,13 +26,13 @@ export default function Input({ onChange, onEnter, placeholder, className, value
         } catch (error) {
             console.error(error);
         }
-    }, [onChange]);
+    };
 
-    const handleClear = useCallback(() => {
+    const handleClear = () => {
         onChange?.({ target: { value: "" } } as React.ChangeEvent<HTMLInputElement>);
-    }, [onChange]);
+    };
 
-    const hasValue = useMemo(() => Boolean(value && value.length > 0), [value]);
+    const hasValue = Boolean(value && value.length > 0);
 
     return (
         <>

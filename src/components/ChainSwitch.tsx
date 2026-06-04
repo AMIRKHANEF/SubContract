@@ -2,7 +2,6 @@ import { POLKADOT_ASSET_HUB_CHAIN, SUPPORTED_CHAINS } from '@/utils/constants';
 import { Popover, PopoverButton, PopoverPanel, useClose } from '@headlessui/react'
 import Divider from './ui/Divider';
 import { useNetwork } from '@/hooks/useStore';
-import { useCallback } from 'react';
 import type { Chain } from '@/utils/types';
 import { twMerge } from 'tailwind-merge';
 
@@ -15,10 +14,10 @@ function ChainItem({ chain, isSelected }: ChainItemProps) {
     const close = useClose();
     const { setSelectedChain } = useNetwork();
 
-    const handleClick = useCallback(() => {
+    const handleClick = () => {
         setSelectedChain(chain);
         close();
-    }, [chain, close, setSelectedChain]);
+    };
 
     return (
         <div

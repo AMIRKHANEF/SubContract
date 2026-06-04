@@ -2,7 +2,7 @@ import Button from "@/components/ui/Button";
 import Card from "./ui/Card";
 import Input from "./ui/Input";
 import SectionTitle from "./ui/SectionTitle";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { isValidContractAddr } from "@/utils/utils";
 import { useContracts, useNetwork } from "@/hooks/useStore";
 import type { Contract } from "@/store/types";
@@ -20,16 +20,16 @@ export default function WatchContract({ setPopup }: Props) {
     const [contractAddr, setContractAddr] = useState<string | undefined>();
     const [badContractAddr, setError] = useState<boolean>(false);
 
-    const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement, Element>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement, Element>) => {
         const addr = e.target.value;
 
         if (!isValidContractAddr(addr)) setError(true);
         if (!addr || isValidContractAddr(addr)) setError(false);
 
         setContractAddr(addr);
-    }, []);
+    };
 
-    const handleAddContract = useCallback(() => {
+    const handleAddContract = () => {
         if (!contractAddr || !selectedChain || badContractAddr) return;
 
         const contract: Contract = {
@@ -40,7 +40,7 @@ export default function WatchContract({ setPopup }: Props) {
         addWatchedContract(contract);
         setActiveContract(contract);
         setContractAddr("");
-    }, [addWatchedContract, badContractAddr, contractAddr, selectedChain, setActiveContract]);
+    };
 
     return (
         <Card className="flex flex-col gap-3.5">

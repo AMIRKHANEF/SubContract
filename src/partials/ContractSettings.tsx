@@ -12,7 +12,8 @@ export default function ContractSettings({ setPopup }: { setPopup: React.Dispatc
     const { selectedChain } = useNetwork();
 
     const contractsOnChain = useMemo(() =>
-        watchedContracts.filter(({ chainGenesisHash }) => chainGenesisHash === selectedChain?.genesisHash), [selectedChain?.genesisHash, watchedContracts]);
+        watchedContracts.filter(({ chainGenesisHash }) => chainGenesisHash === selectedChain?.genesisHash)
+    , [selectedChain?.genesisHash, watchedContracts]);
 
     return (
         <div className="flex flex-col w-[90vw] p-4.5 pt-3">

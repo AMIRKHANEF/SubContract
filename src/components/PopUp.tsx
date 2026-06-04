@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function PopUp({ popup, setPopup }: Props) {
-    const isOpen = useMemo(() => popup !== PopUps.None, [popup]);
+    const isOpen = popup !== PopUps.None;
 
     const content = useMemo(() => {
         switch (popup) {
