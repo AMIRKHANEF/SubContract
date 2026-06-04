@@ -195,3 +195,12 @@ body {
 @utility input-wiggle {
     animation: wiggle 0.45s ease-in-out;
 }
+
+
+@keyframes scrollText {
+    0%   { transform: translateX(0); }
+    25%  { transform: translateX(var(--scroll-offset)); }
+    50%  { transform: translateX(var(--scroll-offset)); }
+    75%  { transform: translateX(0); }
+    100% { transform: translateX(0); }
+}
