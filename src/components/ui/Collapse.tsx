@@ -1,6 +1,26 @@
 import { useState, type ReactNode } from 'react';
 import Card from './Card';
 import { ChevronDownIcon } from "lucide-react";
+import { twMerge } from 'tailwind-merge';
+
+interface CollapseContentType {
+    isOpen: boolean;
+    children: ReactNode;
+    className?: string;
+}
+
+export function CollapseContent({ children, className, isOpen }: CollapseContentType) {
+    return (
+        <div
+            className={twMerge(`transition-all duration-200 ease-in-out px-4.5
+                    ${isOpen ? 'pb-4.5 max-h-screen opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`, className)}
+        >
+            <>
+                {children}
+            </>
+        </div>
+    );
+}
 
 interface Props {
     collapseChildren: ReactNode;
@@ -12,7 +32,7 @@ export default function Collapse({ children, collapseChildren, withChevron }: Pr
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     return (
-        <Card style='p-0'>
+        <Card className='p-0'>
             {/* Header / Trigger */}
             <div
                 className={'relative cursor-pointer p-4.5'}
@@ -29,14 +49,9 @@ export default function Collapse({ children, collapseChildren, withChevron }: Pr
             </div>
 
             {/* Content Area */}
-            <div
-                className={`transition-all duration-normal ease-in-out px-4.5
-                    ${isOpen ? 'pb-4.5 max-h-screen opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}
-            >
-                <div className=''>
-                    {children}
-                </div>
-            </div>
+            <CollapseContent isOpen={isOpen}>
+                {children}
+            </CollapseContent>
         </Card>
     );
 };
