@@ -1,3 +1,4 @@
+import AccountTransform from "@/partials/AccountTransform";
 import ContractSettings from "@/partials/ContractSettings";
 import { PopUps } from "@/utils/constants";
 import { Dialog, DialogPanel } from "@headlessui/react";
@@ -15,6 +16,9 @@ export default function PopUp({ popup, setPopup }: Props) {
         switch (popup) {
             case PopUps.ContractSettings:
                 return <ContractSettings setPopup={setPopup} />
+
+            case PopUps.AccountTransform:
+                return <AccountTransform setPopup={setPopup} />
 
             default:
                 return <></>;

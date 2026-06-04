@@ -16,7 +16,7 @@ function App() {
         <Header />
         <Content>
           <WatchContract setPopup={setPopup} />
-          <Utilities />
+          <Utilities setPopup={setPopup} />
         </Content>
         <Footer />
       </div>
