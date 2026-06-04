@@ -146,9 +146,9 @@ The first release focuses on establishing the fundamental workflow: watch contra
 - [x] Project scaffolding and architecture
 - [x] Chain selector (Asset Hub mainnet + Paseo testnet)
 - [x] Contract watchlist with local persistence
-- [ ] SS58 ↔ H160 address converter
-- [ ] Contract dashboard (verification, deployer, stats)
+- [x] SS58 ↔ H160 address converter
 - [ ] ABI viewer with search and copy
+- [ ] Contract dashboard (verification, deployer, stats)
 - [ ] Recent activity feed with decoded function names
 - [ ] Function selector decoder
 - [ ] Event topic hash lookup
