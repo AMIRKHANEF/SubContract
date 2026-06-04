@@ -2,13 +2,13 @@ import { twMerge } from "tailwind-merge";
 
 interface Props {
     orientation?: 'horizontal' | 'vertical';
-    style?: string;
+    className?: string;
 }
 
-export default function Divider({ orientation = 'horizontal', style }: Props) {
+export default function Divider({ orientation = 'horizontal', className }: Props) {
     return (
         <hr
-            className={twMerge(DividerStyle[orientation], style)}
+            className={twMerge(DividerStyle[orientation], className)}
         />
     );
 }

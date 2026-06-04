@@ -2,12 +2,12 @@ import { twMerge } from "tailwind-merge";
 
 interface Props {
     children?: React.ReactNode;
-    style?: string;
+    className?: string;
 }
 
-export default function Card({ children, style }: Props) {
+export default function Card({ children, className }: Props) {
     return (
-        <div className={twMerge("bg-bg-secondary border-default rounded-lg p-4 shadow-md card-transition hover:border-border-secondary", style)}>
+        <div className={twMerge("bg-bg-secondary border-default rounded-lg p-4 shadow-md card-transition hover:border-border-secondary", className)}>
             {children}
         </div>
     );

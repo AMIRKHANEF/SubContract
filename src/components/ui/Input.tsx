@@ -7,12 +7,12 @@ interface Props {
     value?: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onEnter?: () => void;
-    style?: string;
+    className?: string;
     error?: boolean;
     showPasteIcon?: boolean;
 }
 
-export default function Input({ onChange, onEnter, placeholder, style, value, error = false, showPasteIcon = false, }: Props) {
+export default function Input({ onChange, onEnter, placeholder, className, value, error = false, showPasteIcon = false, }: Props) {
     const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && onEnter) {
             onEnter();
@@ -51,7 +51,7 @@ export default function Input({ onChange, onEnter, placeholder, style, value, er
 
                         // Error styles
                         error ? "border-red-500 border-2 text-red-500 input-wiggle" : "",
-                        style
+                        className
                     )}
                     placeholder={placeholder}
                     value={value}
