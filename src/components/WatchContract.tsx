@@ -43,7 +43,7 @@ export default function WatchContract({ setPopup }: Props) {
     }, [addWatchedContract, badContractAddr, contractAddr, selectedChain, setActiveContract]);
 
     return (
-        <Card style="flex flex-col gap-3.5">
+        <Card className="flex flex-col gap-3.5">
             <SectionTitle text="Watch Smart Contract" />
             <Input
                 placeholder="Paste contract address..."
@@ -58,7 +58,7 @@ export default function WatchContract({ setPopup }: Props) {
                     onClick={handleAddContract}
                     title="Add To Watchlist"
                     type="primary"
-                    style="flex-1"
+                    className="flex-1"
                 />
                 <Button
                     onClick={() => setPopup(PopUps.ContractSettings)}

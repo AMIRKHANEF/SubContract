@@ -4,6 +4,8 @@ import Divider from "@/components/ui/Divider";
 import Button from "@/components/ui/Button";
 import { PopUps } from "@/utils/constants";
 import ContractItem from "@/components/ContractItem";
+import PopupTitle from "@/components/ui/PopupTitle";
+import { FileSliders } from "lucide-react";
 
 export default function ContractSettings({ setPopup }: { setPopup: React.Dispatch<React.SetStateAction<PopUps>> }) {
     const { activeContract, watchedContracts, setActiveContract, removeWatchedContract } = useContracts();
@@ -14,10 +16,11 @@ export default function ContractSettings({ setPopup }: { setPopup: React.Dispatc
 
     return (
         <div className="flex flex-col w-[90vw] p-4.5 pt-3">
-            <p className="text-title">
-                Contracts Setting
-            </p>
-            <Divider style="my-2.5" />
+            <PopupTitle
+                title="Contracts Setting"
+                Icon={<FileSliders size={28} className="text-accent-primary" />}
+            />
+            <Divider className="my-2.5" />
             <p className="text-sm font-extralight text-text-primary px-2.5 py-4 mb-2.5">
                 Select an active smart contract by starring it, or remove one from the list.
             </p>
@@ -47,9 +50,9 @@ export default function ContractSettings({ setPopup }: { setPopup: React.Dispatc
             }
             <Button
                 onClick={() => setPopup(PopUps.None)}
-                type="primary"
+                type="quaternary"
                 title="Done"
-                style="mt-5"
+                className="mt-5"
             />
         </div>
     );
