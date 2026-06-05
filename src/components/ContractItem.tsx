@@ -18,16 +18,18 @@ export default function ContractItem({ contract, isActive, onActive, onRemove }:
             <p>{toShortAddress(contract.address)}</p>
             <p>{contract.label}</p>
             <div className="flex flex-row gap-1.5 items-center">
-                <Trash2
-                    onClick={() => onRemove?.(contract)}
-                    size={32}
-                    className={iconsBaseStyle}
-                />
-                <Star
-                    onClick={() => onActive?.(contract)}
-                    size={34}
-                    className={twMerge(iconsBaseStyle, isActive ? "text-yellow-400 fill-yellow-400" : "")}
-                />
+                {onRemove &&
+                    <Trash2
+                        onClick={() => onRemove(contract)}
+                        size={32}
+                        className={iconsBaseStyle}
+                    />}
+                {onActive &&
+                    <Star
+                        onClick={() => onActive(contract)}
+                        size={34}
+                        className={twMerge(iconsBaseStyle, isActive ? "text-yellow-400 fill-yellow-400" : "")}
+                    />}
             </div>
         </div>
     );
