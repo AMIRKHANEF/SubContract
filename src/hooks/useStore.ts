@@ -2,7 +2,8 @@ import { useAppSelector, useAppDispatch } from "./useAppStore";
 import { setSelectedChain, clearSelectedChain } from "../store/slices/networkSlice";
 import { setActiveContract, clearActiveContract, addWatchedContract, removeWatchedContract, } from "../store/slices/contractsSlice";
 import { setAccounts, addAccount, removeAccount, setActiveAccount, clearActiveAccount, } from "../store/slices/accountsSlice";
-import type { Contract, Account } from "../store/types";
+import { goHome, navigateTo } from "../store/slices/navigationSlice";
+import type { Contract, Account, Page, Direction } from "../store/types";
 import type { Chain } from "@/utils/types";
 
 // ─── Network ──────────────────────────────────────────────────────────────────
@@ -22,8 +23,7 @@ export function useNetwork() {
 
 export function useContracts() {
     const dispatch = useAppDispatch();
-    const activeContract = useAppSelector((s) => s.contracts.activeContract);
-    const watchedContracts = useAppSelector((s) => s.contracts.watchedContracts);
+    const { activeContract, watchedContracts } = useAppSelector((s) => s.contracts);
 
     return {
         activeContract,
@@ -39,8 +39,7 @@ export function useContracts() {
 
 export function useAccounts() {
     const dispatch = useAppDispatch();
-    const accounts = useAppSelector((s) => s.accounts.accounts);
-    const activeAccount = useAppSelector((s) => s.accounts.activeAccount);
+    const { accounts, activeAccount } = useAppSelector((s) => s.accounts);
 
     return {
         accounts,
@@ -50,5 +49,19 @@ export function useAccounts() {
         removeAccount: (address: string) => dispatch(removeAccount({ address })),
         setActiveAccount: (account: Account) => dispatch(setActiveAccount(account)),
         clearActiveAccount: () => dispatch(clearActiveAccount()),
+    };
+}
+
+// ─── Navigation ─────────────────────────────────────────────────────────────────
+
+export function useNavigation() {
+    const dispatch = useAppDispatch();
+    const { currentPage, direction } = useAppSelector((s) => s.navigation);
+
+    return {
+        currentPage,
+        direction,
+        goHome: () => dispatch(goHome()),
+        navigateTo: (to: Page, direction?: Direction) => dispatch(navigateTo({ to, direction }))
     };
 }
