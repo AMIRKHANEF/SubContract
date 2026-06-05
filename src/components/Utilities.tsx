@@ -1,10 +1,13 @@
 import type { PopUps } from "@/utils/constants";
-import { features } from "../../content";
+import { features, pages } from "../../content";
 import Collapse from "./ui/Collapse";
 import SectionTitle from "./ui/SectionTitle";
 import UtilityItem from "./UtilityItem";
+import { useNavigation } from "@/hooks/useStore";
 
 export default function Utilities({ setPopup }: { setPopup: (popup: PopUps) => void }) {
+    const { navigateTo } = useNavigation();
+
     return (
         <Collapse
             collapseChildren={
@@ -21,6 +24,15 @@ export default function Utilities({ setPopup }: { setPopup: (popup: PopUps) => v
                         description={description}
                         icon={icon}
                         onClick={() => setPopup(popup)}
+                        title={title}
+                    />
+                ))}
+                {pages.map(({ description, icon, title, path }, index) => (
+                    <UtilityItem
+                        key={index}
+                        description={description}
+                        icon={icon}
+                        onClick={() => navigateTo(path)}
                         title={title}
                     />
                 ))}
