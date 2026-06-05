@@ -28,10 +28,19 @@ export interface AccountState {
     activeAccount: Account | null;
 }
 
+export type Page = "Home" | "ABI Viewer";
+export type Direction = 1 | -1; // 1 === "forward" & -1 === "back"
+
+export interface NavigationState {
+    currentPage: Page;
+    direction: Direction;
+}
+
 // ─── Root State ───────────────────────────────────────────────────────────────
 
 export interface RootState {
     network: NetworkState;
     contracts: ContractState;
     accounts: AccountState;
+    navigation: NavigationState;
 }
