@@ -38,7 +38,7 @@ body {
 */
 
 @utility page-container {
-    @apply flex flex-col h-screen;
+    @apply flex flex-col h-screen w-screen;
 }
 
 @utility section-container {
