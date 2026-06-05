@@ -5,7 +5,11 @@ import type { RootState } from "./types";
 
 export function saveStateToStorage(state: RootState): void {
     try {
-        const serialized = JSON.stringify(state);
+        // page should not save in the local storage
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { navigation: _, ...stateToSave } = state;
+
+        const serialized = JSON.stringify(stateToSave );
 
         localStorage.setItem(STORAGE_KEY, serialized);
     } catch (err) {
