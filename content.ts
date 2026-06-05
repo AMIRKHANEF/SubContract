@@ -1,3 +1,4 @@
+import type { Page } from "@/store/types";
 import { PopUps } from "@/utils/constants";
 
 export const features = [
@@ -14,15 +15,18 @@ export const features = [
         popup: PopUps.SelectorLookUp
     },
     {
-        title: 'ABI Viewer',
-        description: 'Inspect contract ABI',
-        icon: '📦',
-        popup: PopUps.AbiViewer
-    },
-    {
         title: 'Account Transform',
         description: 'SS58 ⇔ H-160',
         icon: '↔️',
         popup: PopUps.AccountTransform
     },
 ];
+
+export const pages = [
+    {
+        title: 'ABI Viewer',
+        description: 'Inspect contract ABI',
+        icon: '📦',
+        path: "ABI Viewer" as Page
+    }
+]
