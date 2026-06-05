@@ -2,7 +2,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useNavigation } from './hooks/useStore';
 import Home from './pages/Home';
-import AbiViewer from './pages/AbiViewer';
 import { useMemo } from 'react';
 
 const variants = {
@@ -14,15 +13,10 @@ const variants = {
 export default function App () {
   const { currentPage, direction } = useNavigation();
 
-  console.log("currentPage:", currentPage);
-
   const content = useMemo(() => {
     switch (currentPage) {
       case 'Home':
         return <Home />;
-    
-      case 'ABI Viewer':
-        return <AbiViewer />;
     
       default:
         return <Home />;

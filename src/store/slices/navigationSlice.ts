@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Direction, NavigationState, Page } from "../types";
 
-const initialState: NavigationState = {
+export const initialState: NavigationState = {
     currentPage: "Home",
     direction: 1 // "forward"
 };

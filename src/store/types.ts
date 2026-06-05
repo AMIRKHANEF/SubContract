@@ -28,7 +28,7 @@ export interface AccountState {
     activeAccount: Account | null;
 }
 
-export type Page = "Home" | "ABI Viewer";
+export type Page = "Home";
 export type Direction = 1 | -1; // 1 === "forward" & -1 === "back"
 
 export interface NavigationState {
