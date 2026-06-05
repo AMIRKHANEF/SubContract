@@ -1,5 +1,6 @@
 import { SUPPORTED_CHAINS } from "@/utils/constants";
 import type { RootState } from "./types";
+import { initialState as navigationInitState } from "./slices/navigationSlice";
 
 // ─── Cold Start State ─────────────────────────────────────────────────────────
 
@@ -15,4 +16,5 @@ export const COLD_START_STATE: RootState = {
         accounts: [],
         activeAccount: null,
     },
+    navigation: navigationInitState
 };
