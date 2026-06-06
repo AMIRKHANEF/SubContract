@@ -31,3 +31,9 @@ export const isValidContractAddr = (contractAddr: string | undefined) => {
 export const toShortAddress = (addr: string, count: number = 4) => {
     return addr.slice(0, count) + '...' + addr.slice(-count);
 }
+
+export const toEllipsisAddress = (addr: string | undefined, count: number = 6) => {
+    if (!addr) return undefined;
+
+    return addr.slice(0, count) + '...';
+}
