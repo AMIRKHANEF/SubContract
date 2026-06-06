@@ -1,9 +1,10 @@
-import { useContracts } from "@/hooks/useStore";
+import { useContracts, useNetwork } from "@/hooks/useStore";
 import { toEllipsisAddress, toShortAddress } from "@/utils/utils";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import Divider from "./ui/Divider";
 import type { Contract } from "@/store/types";
 import { twMerge } from "tailwind-merge";
+import { useMemo } from "react";
 
 function EmptyList () {
     return (
@@ -29,8 +30,22 @@ function ContractItem({ contract, isActive }: ContractItemProps) {
     );
 }
 
-export default function ContractSwitch() {
+interface Props {
+    filterBaseOnSelectedChain?: boolean;
+}
+
+export default function ContractSwitch({ filterBaseOnSelectedChain = false }: Props) {
     const { activeContract, watchedContracts } = useContracts();
+    const { selectedChain } = useNetwork();
+
+    const contractsToShow = useMemo(() => {
+        if (filterBaseOnSelectedChain) {
+            return watchedContracts
+                .filter(({ chainGenesisHash }) => chainGenesisHash === selectedChain?.genesisHash);
+        }
+
+        return watchedContracts;
+    }, [filterBaseOnSelectedChain, selectedChain?.genesisHash, watchedContracts]);
 
     return (
         <Popover className="relative">
@@ -51,7 +66,7 @@ export default function ContractSwitch() {
                     ease-in-out data-closed:opacity-0 shadow-2xl p-2 gap-1"
                 transition
             >
-                {watchedContracts.map((contract, index) => {
+                {contractsToShow.map((contract, index) => {
                     const isActive = contract.address === activeContract?.address;
 
                     return (
@@ -61,11 +76,11 @@ export default function ContractSwitch() {
                                 contract={contract}
                                 isActive={isActive}
                             />
-                            {(watchedContracts.length - 1 > index) && <Divider />}
+                            {(contractsToShow.length - 1 > index) && <Divider />}
                         </>
                     )
                 })}
-                {watchedContracts.length === 0 &&
+                {contractsToShow.length === 0 &&
                     <EmptyList />   
                 }
             </PopoverPanel>
