@@ -24,9 +24,9 @@ export const features = [
 
 export const pages = [
     {
-        title: 'ABI Viewer',
+        title: 'ABI Explorer',
         description: 'Inspect contract ABI',
         icon: '📦',
-        path: "ABI Viewer" as Page
+        path: "AbiExplore" as Page
     }
 ]
