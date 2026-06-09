@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useNavigation } from './hooks/useStore';
 import Home from './pages/Home';
 import { useMemo } from 'react';
+import AbiExplore from './pages/AbiExplore';
 
 const variants = {
   enter: (direction: number) => ({ x: direction > 0 ? '100%' : '-100%' }),
@@ -17,6 +18,9 @@ export default function App () {
     switch (currentPage) {
       case 'Home':
         return <Home />;
+
+        case 'AbiExplore':
+        return <AbiExplore />;
     
       default:
         return <Home />;
