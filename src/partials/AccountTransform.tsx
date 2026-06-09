@@ -10,6 +10,7 @@ import { u8aToHex } from "@polkadot/util";
 import { decodeAddress } from "@polkadot/util-crypto";
 import { CollapseContent } from "@/components/ui/Collapse";
 import DisplayAddress from "@/components/DisplayAddress";
+import DescriptionText from "@/components/ui/DescriptionText";
 
 export interface FormattedType {
     address: string;
@@ -123,9 +124,10 @@ export default function AccountTransform({ setPopup }: { setPopup: React.Dispatc
                 Icon={<LayoutDashboard size={28} className="text-accent-primary" />}
             />
             <Divider className="my-2.5" />
-            <p className="text-sm font-extralight text-text-primary px-2.5 py-2.5 mb-2.5">
-                Bidirectional conversion between Substrate-based SS58 and H160 address formats.
-            </p>
+            <DescriptionText
+                description="Bidirectional conversion between Substrate-based SS58 and H160 address formats."
+                className="mb-2.5"
+            />
             <Input
                 placeholder="Paste address..."
                 onChange={handleInputChange}
