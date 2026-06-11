@@ -10,12 +10,14 @@
     ],
     "action": {
         "default_popup": "index.html",
-        "default_icon": "icons/icon48.png"
+        "default_icon": "logo/logo-SubContract.png"
     },
     "background": {
         "service_worker": "src/background.ts"
     },
     "icons": {
-        "48": "icons/icon48.png"
+        "128": "logo/logo-SubContract-128.png",
+        "48": "logo/logo-SubContract-48.png",
+        "16": "logo/logo-SubContract-16.png"
     }
 }
