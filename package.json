@@ -11,12 +11,6 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.10",
-    "@polkadot-api/descriptors": "file:.papi\\descriptors",
-    "@polkadot/networks": "^14.0.3",
-    "@polkadot/ui-keyring": "^3.16.7",
-    "@polkadot/util": "^14.0.3",
-    "@polkadot/util-crypto": "^14.0.3",
-    "@polkagate/apps-config": "^2.2.0",
     "@reduxjs/toolkit": "^2.12.0",
     "@tailwindcss/vite": "^4.3.0",
     "framer-motion": "^12.40.0",
