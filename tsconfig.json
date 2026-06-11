@@ -10,7 +10,9 @@
   ],
   "compilerOptions": {
     "types": [
-      "chrome"
+      "chrome",
+      "vite/client",
+      "node"
     ],
     "baseUrl": ".",
     "paths": {
