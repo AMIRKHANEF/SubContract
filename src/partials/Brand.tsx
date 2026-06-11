@@ -1,11 +1,13 @@
 import { EXTENSION_NAME } from "../utils/constants";
+import logo from '@/assets/logo/logo-SubContract.png'
 
 export default function Brand() {
     return (
         <div className="flex items-center gap-3">
-            <div className="w-9.5 h-9.5 flex items-center justify-center bg-accent-primary text-white font-bold rounded-lg text-smd brand-icon-bg">
-                SC
-            </div>
+            <img
+                src={logo}
+                className="w-9.5 h-9.5"
+            />
 
             <div className="leading-tight">
                 <div className="text-lmd font-bold">
