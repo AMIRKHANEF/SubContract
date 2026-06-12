@@ -34,6 +34,7 @@
   --color-warning: var(--warning);
   --color-error: var(--error);
   --color-info: var(--info);
+  --color-event: var(--event);
 
   /*
   ----------------------------------------------------------------------
