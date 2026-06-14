@@ -7,12 +7,13 @@ export enum ABITab {
     Specials = "Specials"
 }
 
-export type StateType =  "write" | "view" | "payable" | "event" | "error" | "ctor" | "nonpayable";
+export type StateType =  "write" | "view" | "payable" | "event" | "error" | "constructor" | "nonpayable";
 
 export type StateMutability =
     | "pure"
     | "view"
     | "nonpayable"
+    | "ctor"
     | "payable";
 
 export type ABIItemType =
@@ -203,10 +204,10 @@ export function parseABI(raw: string | ABIItem[]): ParsedABI {
 
         return {
             kind: type,
-            name: "", // just to satisfy the ParsedSpecialItem type
+            name: type,
             signature: buildSignature(item),
             shortSignature: buildSignature(item, false),
-            stateMutability: item.stateMutability,
+            stateMutability: item.stateMutability === "nonpayable" && type === "constructor" ? "ctor" : item.stateMutability,
             inputs: (item.inputs ?? []).map(parseParameter),
         };
     }
