@@ -3,6 +3,7 @@ import DescriptionText from "@/components/ui/DescriptionText";
 import Input from "@/components/ui/Input";
 import PageTitle from "@/components/ui/PageTitle";
 import { useNavigation } from "@/hooks/useStore";
+import TabContent from "@/partials/abi/TabContent";
 import TabItem from "@/partials/abi/TabItem";
 import { ABITab, parseABI, type ParsedABI } from "@/utils/ABI/ABIParser";
 import { validateAbi } from "@/utils/ABI/validateABI";
@@ -15,7 +16,7 @@ export default function AbiExplore() {
     const [rawInput, setRawInput] = useState<string | undefined>();
     const [parsedABI, setParsedABI] = useState<ParsedABI | undefined>();
     const [error, setError] = useState<boolean>(false);
-    const [selectedTab, setSelectedTab] = useState<ABITab | undefined>(ABITab.Functions);
+    const [selectedTab, setSelectedTab] = useState<ABITab>(ABITab.Functions);
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement, Element>) => {
         try {
@@ -86,17 +87,23 @@ export default function AbiExplore() {
                 />
             </div>
             {tabContent &&
-                <div className="flex flex-row gap-1.5 items-center">
-                    {tabContent.map(({ count, name }, index) => (
-                        <TabItem
-                            count={count}
-                            name={name}
-                            onClick={() => setSelectedTab(name)}
-                            isSelected={selectedTab === name}
-                            key={index}
-                        />
-                    ))}
-                </div>    
+                <>
+                    <div className="flex flex-row gap-1.5 items-center">
+                        {tabContent.map(({ count, name }, index) => (
+                            <TabItem
+                                count={count}
+                                name={name}
+                                onClick={() => setSelectedTab(name)}
+                                isSelected={selectedTab === name}
+                                key={index}
+                            />
+                        ))}
+                    </div>
+                    <TabContent
+                        tab={selectedTab}
+                        parsedABI={parsedABI}
+                    />
+                </>
             }
         </div>
     );
