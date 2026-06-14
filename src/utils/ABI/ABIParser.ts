@@ -72,6 +72,7 @@ export interface ParsedEvent {
     indexedInputs: ParsedParameter[];
     nonIndexedInputs: ParsedParameter[];
     searchableText: string;
+    outputs: ParsedParameter[];
 }
 
 export interface ParsedError {
@@ -81,6 +82,7 @@ export interface ParsedError {
     shortSignature: string;
     inputs: ParsedParameter[];
     searchableText: string;
+    outputs: ParsedParameter[];
 }
 
 export interface ParsedSpecialItem {
@@ -90,6 +92,7 @@ export interface ParsedSpecialItem {
     shortSignature: string;
     stateMutability?: StateMutability;
     inputs: ParsedParameter[];
+    outputs: ParsedParameter[];
 }
 
 export interface ParsedABI {
@@ -175,6 +178,7 @@ export function parseABI(raw: string | ABIItem[]): ParsedABI {
             shortSignature: buildSignature(event, false),
             anonymous: event.anonymous ?? false,
             inputs: (event.inputs ?? []).map(parseParameter),
+            outputs: [],
             indexedInputs: (event.inputs ?? [])
                 .filter((x) => x.indexed)
                 .map(parseParameter),
@@ -193,6 +197,7 @@ export function parseABI(raw: string | ABIItem[]): ParsedABI {
             shortSignature: buildSignature(error, false),
             inputs: (error.inputs ?? []).map(parseParameter),
             searchableText: `${error.name} ${buildSignature(error)} `.toLowerCase(),
+            outputs: [],
         }));
 
     function parseSpecial(
@@ -209,6 +214,7 @@ export function parseABI(raw: string | ABIItem[]): ParsedABI {
             shortSignature: buildSignature(item, false),
             stateMutability: item.stateMutability === "nonpayable" && type === "constructor" ? "ctor" : item.stateMutability,
             inputs: (item.inputs ?? []).map(parseParameter),
+            outputs: [],
         };
     }
 
