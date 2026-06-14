@@ -37,3 +37,9 @@ export const toEllipsisAddress = (addr: string | undefined, count: number = 6) =
 
     return addr.slice(0, count) + '...';
 }
+
+export const availableWidth = (ref: React.RefObject<null>, maxWidth: number) => {
+    const usedWidth = (ref.current as unknown as { clientWidth: number })?.clientWidth ?? 0;
+
+    return maxWidth - usedWidth;
+}
