@@ -5,8 +5,10 @@ import PageTitle from "@/components/ui/PageTitle";
 import { useNavigation } from "@/hooks/useStore";
 import TabContent from "@/partials/abi/TabContent";
 import TabItem from "@/partials/abi/TabItem";
+import { variants } from "@/styles/style";
 import { ABITab, parseABI, type ParsedABI } from "@/utils/ABI/ABIParser";
-import { validateAbi } from "@/utils/ABI/validateABI";
+import { validateAbi } from "@/utils/ABI/validateABI2";
+import { motion } from "framer-motion";
 import { BookText } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 
@@ -22,7 +24,7 @@ export default function AbiExplore() {
         try {
             const value = e.target.value;
             setError(false);
-
+            
             if (!value) return setRawInput("");
 
             if (!validateAbi(value)) throw Error('Bad ABI input');
@@ -57,10 +59,8 @@ export default function AbiExplore() {
         ];
     }, [parsedABI]);
 
-    console.log("parsedABI:", parsedABI);
-
     return (
-        <div className="section-container max-h-screen overflow-auto">
+        <div className="section-container max-h-screen overflow-y-auto">
             <PageTitle
                 text="ABI Explorer"
                 Icon={BookText}
@@ -87,7 +87,14 @@ export default function AbiExplore() {
                 />
             </div>
             {tabContent &&
-                <>
+                <motion.div
+                    custom={1}
+                    variants={variants}
+                    initial="enter"
+                    animate="center"
+                    transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
+                    className="flex flex-col gap-2.5 pb-2.5"
+                >
                     <div className="flex flex-row gap-1.5 items-center">
                         {tabContent.map(({ count, name }, index) => (
                             <TabItem
@@ -103,7 +110,7 @@ export default function AbiExplore() {
                         tab={selectedTab}
                         parsedABI={parsedABI}
                     />
-                </>
+                </motion.div>
             }
         </div>
     );
