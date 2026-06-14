@@ -126,11 +126,14 @@ function parseParameter(param: ABIParameter): ParsedParameter {
 }
 
 export function buildSignature(item: ABIItem): string {
+export function buildSignature(item: ABIItem, withName: boolean = true): string {
     const params = (item.inputs ?? [])
         .map((p) => `${p.type}${p.name ? ` ${p.name}` : ""}`)
         .join(", ");
 
-    return `${item.name ?? item.type} (${params})`;
+    const name = withName ? `${item.name ?? item.type} ` : '';
+
+    return `${name}(${params})`;
 }
 
 export function parseABI(raw: string | ABIItem[]): ParsedABI {
@@ -149,10 +152,7 @@ export function parseABI(raw: string | ABIItem[]): ParsedABI {
             kind: "function",
             name: fn.name!,
             signature: buildSignature(fn),
-            shortSignature: `${fn.name} (${(fn.inputs ?? [])
-                    .map((x) => x.type)
-                    .join(",")
-                })`,
+            shortSignature: buildSignature(fn, false),
             stateMutability: fn.stateMutability ?? "nonpayable",
             inputs: (fn.inputs ?? []).map(parseParameter),
             outputs: (fn.outputs ?? []).map(parseParameter),
