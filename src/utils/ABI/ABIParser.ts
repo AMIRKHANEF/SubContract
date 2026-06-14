@@ -7,6 +7,8 @@ export enum ABITab {
     Specials = "Specials"
 }
 
+export type StateType =  "write" | "view" | "payable" | "event" | "error" | "ctor" | "nonpayable";
+
 export type StateMutability =
     | "pure"
     | "view"
@@ -63,6 +65,7 @@ export interface ParsedEvent {
     kind: "event";
     name: string;
     signature: string;
+    shortSignature: string;
     anonymous: boolean;
     inputs: ParsedParameter[];
     indexedInputs: ParsedParameter[];
@@ -74,6 +77,7 @@ export interface ParsedError {
     kind: "error";
     name: string;
     signature: string;
+    shortSignature: string;
     inputs: ParsedParameter[];
     searchableText: string;
 }
@@ -82,6 +86,7 @@ export interface ParsedSpecialItem {
     kind: "constructor" | "fallback" | "receive";
     name: string;
     signature: string;
+    shortSignature: string;
     stateMutability?: StateMutability;
     inputs: ParsedParameter[];
 }
@@ -125,7 +130,6 @@ function parseParameter(param: ABIParameter): ParsedParameter {
     };
 }
 
-export function buildSignature(item: ABIItem): string {
 export function buildSignature(item: ABIItem, withName: boolean = true): string {
     const params = (item.inputs ?? [])
         .map((p) => `${p.type}${p.name ? ` ${p.name}` : ""}`)
@@ -167,6 +171,7 @@ export function parseABI(raw: string | ABIItem[]): ParsedABI {
             kind: "event",
             name: event.name!,
             signature: buildSignature(event),
+            shortSignature: buildSignature(event, false),
             anonymous: event.anonymous ?? false,
             inputs: (event.inputs ?? []).map(parseParameter),
             indexedInputs: (event.inputs ?? [])
@@ -184,6 +189,7 @@ export function parseABI(raw: string | ABIItem[]): ParsedABI {
             kind: "error",
             name: error.name!,
             signature: buildSignature(error),
+            shortSignature: buildSignature(error, false),
             inputs: (error.inputs ?? []).map(parseParameter),
             searchableText: `${error.name} ${buildSignature(error)} `.toLowerCase(),
         }));
@@ -199,6 +205,7 @@ export function parseABI(raw: string | ABIItem[]): ParsedABI {
             kind: type,
             name: "", // just to satisfy the ParsedSpecialItem type
             signature: buildSignature(item),
+            shortSignature: buildSignature(item, false),
             stateMutability: item.stateMutability,
             inputs: (item.inputs ?? []).map(parseParameter),
         };
