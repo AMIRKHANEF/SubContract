@@ -7,7 +7,7 @@ import TabContent from "@/partials/abi/TabContent";
 import TabItem from "@/partials/abi/TabItem";
 import { variants } from "@/styles/style";
 import { ABITab, parseABI, type ParsedABI } from "@/utils/ABI/ABIParser";
-import { validateAbi } from "@/utils/ABI/validateABI2";
+import { validateAbi } from "@/utils/ABI/validateABI";
 import { motion } from "framer-motion";
 import { BookText } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";

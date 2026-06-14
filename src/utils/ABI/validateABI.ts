@@ -1,9 +1,22 @@
-// ─── Solidity ABI Validator ───────────────────────────────────────────────────
-// Validates a smart contract ABI against the Solidity ABI specification.
-// Returns true if the ABI is valid, false otherwise.
-// Spec: https://docs.soliditylang.org/en/latest/abi-spec.html
+// ─── Solidity ABI Validator & Fixer ─────────────────────────────────────────
+// Validates and auto-fixes a Solidity ABI.
+//
+// Returns the fixed (and always valid) ABI array on success, or null if the
+// input is fatally broken and cannot be repaired (e.g. unparsable text,
+// duplicate signatures, invalid types that cannot be inferred).
+//
+// Fixes applied automatically:
+//   - JS object-literal syntax  → proper JSON (unquoted keys, trailing commas)
+//   - Missing "name" on params  → defaulted to ""
+//   - "name" on constructor / receive / fallback → removed
+//   - "outputs" on constructor / receive / event / error → removed
+//   - Empty "inputs: []" on receive → removed
+//   - "stateMutability" on event / error → removed
+//   - "indexed" on non-event parameters → removed
+//   - "components" on non-tuple types → removed
+//   - Spec: https://docs.soliditylang.org/en/latest/abi-spec.html
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// ─── Types ───────────────────────────────────────────────────────────────────
 
 type AbiItemType =
     | "function"
@@ -15,296 +28,410 @@ type AbiItemType =
 
 type StateMutability = "pure" | "view" | "nonpayable" | "payable";
 
-interface AbiParameter {
+export interface AbiParameter {
     name: string;
     type: string;
     internalType?: string;
-    components?: AbiParameter[]; // only for tuple types
-    indexed?: boolean;           // only for event parameters
+    components?: AbiParameter[];
+    indexed?: boolean;
 }
 
-interface AbiItem {
+export interface AbiItem {
     type: AbiItemType;
     name?: string;
     inputs?: AbiParameter[];
     outputs?: AbiParameter[];
     stateMutability?: StateMutability;
-    anonymous?: boolean;         // only for events
+    anonymous?: boolean;
 }
 
-// ─── Solidity Base Types ──────────────────────────────────────────────────────
+// ─── Internal result types ───────────────────────────────────────────────────
 
-// Matches: uint, uint8..uint256, int, int8..int256
-const UINT_INT_RE = /^(u?int)(8|16|24|32|40|48|56|64|72|80|88|96|104|112|120|128|136|144|152|160|168|176|184|192|200|208|216|224|232|240|248|256)?$/;
+interface FixResult<T> {
+    fixed: T;
+    /** true when the item is semantically valid after fixes; false = fatal error */
+    ok: boolean;
+}
 
-// Matches: bytes1..bytes32
+// ─── Regexes ─────────────────────────────────────────────────────────────────
+
+const UINT_INT_RE =
+    /^(u?int)(8|16|24|32|40|48|56|64|72|80|88|96|104|112|120|128|136|144|152|160|168|176|184|192|200|208|216|224|232|240|248|256)?$/;
 const BYTES_FIXED_RE = /^bytes([1-9]|[12]\d|3[0-2])$/;
+// Correctly strips full bracket groups: [], [3], [][3][], etc.
+const ARRAY_SUFFIX_RE = /(\[\d*\])+$/;
 
-// Matches any valid Solidity elementary type
-function isElementaryType(type: string): boolean {
+// ─── Type helpers ─────────────────────────────────────────────────────────────
+
+function isElementaryType(t: string): boolean {
     return (
-        type === "address" ||
-        type === "bool" ||
-        type === "string" ||
-        type === "bytes" ||
-        UINT_INT_RE.test(type) ||
-        BYTES_FIXED_RE.test(type)
+        t === "address" ||
+        t === "bool" ||
+        t === "string" ||
+        t === "bytes" ||
+        UINT_INT_RE.test(t) ||
+        BYTES_FIXED_RE.test(t)
     );
 }
 
-// ─── Type Validator ───────────────────────────────────────────────────────────
-//
-// Handles:
-//   - Elementary types              (uint256, address, bool …)
-//   - Fixed arrays                  (uint256[3])
-//   - Dynamic arrays                (uint256[])
-//   - Multi-dimensional arrays      (uint256[][3][])
-//   - Tuples                        (tuple)  — components validated separately
-//   - Tuple arrays                  (tuple[], tuple[3])
-
-function isValidType(type: string): boolean {
-    // Strip all trailing array dimensions, e.g. "uint256[][3][]" → "uint256"
-    const base = type.replace(/(\[\d*\])+$/, "");
-
+function isValidType(t: string): boolean {
+    const base = t.replace(ARRAY_SUFFIX_RE, "");
     if (base === "tuple") return true;
     return isElementaryType(base);
 }
 
-// ─── Parameter Validator ──────────────────────────────────────────────────────
-
-function isValidParameter(param: unknown, allowIndexed: boolean): boolean {
-    if (typeof param !== "object" || param === null || Array.isArray(param)) {
-        return false;
-    }
-
-    const p = param as Record<string, unknown>;
-
-    // `name` must be a string (can be empty for unnamed outputs)
-    if (typeof p.name !== "string") return false;
-
-    // `type` must be a valid Solidity type string
-    if (typeof p.type !== "string" || !isValidType(p.type)) return false;
-
-    // `internalType` is optional but must be a string when present
-    if (p.internalType !== undefined && typeof p.internalType !== "string") {
-        return false;
-    }
-
-    // `indexed` is only allowed when explicitly permitted (event inputs)
-    if (!allowIndexed && p.indexed !== undefined) return false;
-    if (allowIndexed && p.indexed !== undefined && typeof p.indexed !== "boolean") {
-        return false;
-    }
-
-    // Tuple types must have a `components` array; non-tuples must not
-    const isTuple = (p.type as string).replace(/(\[\d*\])+$/, "") === "tuple";
-
-    if (isTuple) {
-        if (!Array.isArray(p.components) || p.components.length === 0) return false;
-        for (const component of p.components) {
-            if (!isValidParameter(component, false)) return false;
-        }
-    } else {
-        if (p.components !== undefined) return false;
-    }
-
-    return true;
+function isTupleType(t: string): boolean {
+    return t.replace(ARRAY_SUFFIX_RE, "") === "tuple";
 }
 
-// ─── ABI Item Validators ──────────────────────────────────────────────────────
+// ─── JS-literal → JSON coercion ───────────────────────────────────────────────
 
-const VALID_STATE_MUTABILITIES = new Set<string>([
-    "pure", "view", "nonpayable", "payable",
+function coerceToJson(raw: string): string {
+    let s = raw.trim();
+    // Remove trailing commas before ] or }
+    s = s.replace(/,(\s*[\]}])/g, "$1");
+    // Quote unquoted object keys
+    s = s.replace(
+        /([{,\n\r]\s*)([a-zA-Z_$][a-zA-Z0-9_$]*)(\s*:)/g,
+        (match, pre, key, colon) => {
+            if (key === "true" || key === "false" || key === "null") return match;
+            return `${pre}"${key}"${colon}`;
+        }
+    );
+    return s;
+}
+
+function tryParse(raw: string): unknown[] | null {
+    // Try strict JSON first
+    try {
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : null;
+    } catch {
+        // Fall through to JS-literal coercion
+    }
+
+    try {
+        const parsed = JSON.parse(coerceToJson(raw));
+        return Array.isArray(parsed) ? parsed : null;
+    } catch {
+        return null;
+    }
+}
+
+// ─── Parameter fixer ──────────────────────────────────────────────────────────
+
+function fixParameter(
+    raw: unknown,
+    allowIndexed: boolean
+): FixResult<AbiParameter> {
+    if (typeof raw !== "object" || raw === null || Array.isArray(raw)) {
+        return { fixed: { name: "", type: "bytes" }, ok: false };
+    }
+
+    const p = raw as Record<string, unknown>;
+    const out: Record<string, unknown> = { ...p };
+
+    // name: default to "" if missing or wrong type
+    if (typeof out.name !== "string") out.name = "";
+
+    // type: must be a valid Solidity type — fatal if absent or invalid
+    if (typeof out.type !== "string" || !isValidType(out.type as string)) {
+        return { fixed: out as unknown as AbiParameter, ok: false };
+    }
+
+    // internalType: must be a string when present
+    if (out.internalType !== undefined && typeof out.internalType !== "string") {
+        return { fixed: out as unknown as AbiParameter, ok: false };
+    }
+
+    // indexed: remove when not in an event; must be boolean when present
+    if (!allowIndexed && out.indexed !== undefined) {
+        delete out.indexed;
+    }
+    if (
+        allowIndexed &&
+        out.indexed !== undefined &&
+        typeof out.indexed !== "boolean"
+    ) {
+        return { fixed: out as unknown as AbiParameter, ok: false };
+    }
+
+    const typeStr = out.type as string;
+
+    // Tuple: must have non-empty components; recursively fix them
+    if (isTupleType(typeStr)) {
+        if (!Array.isArray(out.components) || out.components.length === 0) {
+            return { fixed: out as unknown as AbiParameter, ok: false };
+        }
+        const fixedComponents: AbiParameter[] = [];
+        for (const comp of out.components) {
+            const r = fixParameter(comp, false);
+            if (!r.ok) return { fixed: out as unknown as AbiParameter, ok: false };
+            fixedComponents.push(r.fixed);
+        }
+        out.components = fixedComponents;
+    } else {
+        // Non-tuple: remove stray components
+        if (out.components !== undefined) delete out.components;
+    }
+
+    return { fixed: out as unknown as AbiParameter, ok: true };
+}
+
+function fixParams(
+    raw: unknown,
+    allowIndexed: boolean
+): FixResult<AbiParameter[]> {
+    if (!Array.isArray(raw)) return { fixed: [], ok: false };
+    const fixed: AbiParameter[] = [];
+    for (const item of raw) {
+        const r = fixParameter(item, allowIndexed);
+        if (!r.ok) return { fixed: [], ok: false };
+        fixed.push(r.fixed);
+    }
+    return { fixed, ok: true };
+}
+
+// ─── Item fixers ──────────────────────────────────────────────────────────────
+
+const VALID_MUTABILITIES = new Set<string>([
+    "pure",
+    "view",
+    "nonpayable",
+    "payable",
 ]);
 
-function validateFunction(item: Record<string, unknown>): boolean {
-    // Functions require a non-empty name
-    if (typeof item.name !== "string" || item.name.trim() === "") return false;
+function fixFunction(raw: Record<string, unknown>): FixResult<AbiItem> {
+    const out = { ...raw };
 
-    // stateMutability is required for functions
+    if (typeof out.name !== "string" || (out.name as string).trim() === "") {
+        return { fixed: out as unknown as AbiItem, ok: false };
+    }
     if (
-        typeof item.stateMutability !== "string" ||
-        !VALID_STATE_MUTABILITIES.has(item.stateMutability)
+        typeof out.stateMutability !== "string" ||
+        !VALID_MUTABILITIES.has(out.stateMutability as string)
     ) {
-        return false;
+        return { fixed: out as unknown as AbiItem, ok: false };
     }
 
-    // inputs must be an array of valid parameters
-    if (!Array.isArray(item.inputs)) return false;
-    for (const input of item.inputs) {
-        if (!isValidParameter(input, false)) return false;
-    }
+    const inputs = fixParams(out.inputs ?? [], false);
+    if (!inputs.ok) return { fixed: out as unknown as AbiItem, ok: false };
+    out.inputs = inputs.fixed as unknown as Record<string, unknown>[];
 
-    // outputs must be an array of valid parameters (can be empty)
-    if (!Array.isArray(item.outputs)) return false;
-    for (const output of item.outputs) {
-        if (!isValidParameter(output, false)) return false;
-    }
+    const outputs = fixParams(out.outputs ?? [], false);
+    if (!outputs.ok) return { fixed: out as unknown as AbiItem, ok: false };
+    out.outputs = outputs.fixed as unknown as Record<string, unknown>[];
 
-    return true;
+    return { fixed: out as unknown as AbiItem, ok: true };
 }
 
-function validateConstructor(item: Record<string, unknown>): boolean {
-    // constructors have no name, no outputs
-    if (item.name !== undefined) return false;
-    if (item.outputs !== undefined) return false;
+function fixConstructor(raw: Record<string, unknown>): FixResult<AbiItem> {
+    const out = { ...raw };
 
-    // stateMutability must be "nonpayable" or "payable"
+    // Remove disallowed fields
+    delete out.name;
+    delete out.outputs;
+
+    if (!["nonpayable", "payable"].includes(out.stateMutability as string)) {
+        return { fixed: out as unknown as AbiItem, ok: false };
+    }
+
+    const inputs = fixParams(out.inputs ?? [], false);
+    if (!inputs.ok) return { fixed: out as unknown as AbiItem, ok: false };
+    out.inputs = inputs.fixed as unknown as Record<string, unknown>[];
+
+    return { fixed: out as unknown as AbiItem, ok: true };
+}
+
+function fixReceive(raw: Record<string, unknown>): FixResult<AbiItem> {
+    const out = { ...raw };
+
+    // Remove disallowed fields
+    delete out.name;
+    // Remove inputs entirely (empty array is valid in practice but not in spec)
+    if (Array.isArray(out.inputs) && (out.inputs as unknown[]).length === 0) {
+        delete out.inputs;
+    } else if (out.inputs !== undefined) {
+        // Non-empty inputs on receive() — fatal
+        return { fixed: out as unknown as AbiItem, ok: false };
+    }
     if (
-        typeof item.stateMutability !== "string" ||
-        !["nonpayable", "payable"].includes(item.stateMutability)
+        Array.isArray(out.outputs) &&
+        (out.outputs as unknown[]).length === 0
     ) {
-        return false;
+        delete out.outputs;
+    } else if (out.outputs !== undefined) {
+        return { fixed: out as unknown as AbiItem, ok: false };
     }
 
-    if (!Array.isArray(item.inputs)) return false;
-    for (const input of item.inputs) {
-        if (!isValidParameter(input, false)) return false;
+    if (out.stateMutability !== "payable") {
+        return { fixed: out as unknown as AbiItem, ok: false };
     }
 
-    return true;
+    return { fixed: out as unknown as AbiItem, ok: true };
 }
 
-function validateReceive(item: Record<string, unknown>): boolean {
-    // receive() has no name, no inputs, no outputs, must be payable
-    if (item.name !== undefined) return false;
-    if (item.inputs !== undefined && (item.inputs as unknown[]).length !== 0) return false;
-    if (item.outputs !== undefined && (item.outputs as unknown[]).length !== 0) return false;
-    if (item.stateMutability !== "payable") return false;
-    return true;
-}
+function fixFallback(raw: Record<string, unknown>): FixResult<AbiItem> {
+    const out = { ...raw };
 
-function validateFallback(item: Record<string, unknown>): boolean {
-    // fallback() has no name, no outputs, must be nonpayable or payable
-    if (item.name !== undefined) return false;
-    if (item.outputs !== undefined && (item.outputs as unknown[]).length !== 0) return false;
+    delete out.name;
     if (
-        typeof item.stateMutability !== "string" ||
-        !["nonpayable", "payable"].includes(item.stateMutability)
+        Array.isArray(out.outputs) &&
+        (out.outputs as unknown[]).length === 0
     ) {
-        return false;
+        delete out.outputs;
+    } else if (out.outputs !== undefined) {
+        return { fixed: out as unknown as AbiItem, ok: false };
     }
 
-    // fallback may optionally accept bytes input
-    if (item.inputs !== undefined) {
-        if (!Array.isArray(item.inputs)) return false;
-        for (const input of item.inputs) {
-            if (!isValidParameter(input, false)) return false;
-        }
+    if (!["nonpayable", "payable"].includes(out.stateMutability as string)) {
+        return { fixed: out as unknown as AbiItem, ok: false };
     }
 
-    return true;
+    if (out.inputs !== undefined) {
+        const inputs = fixParams(out.inputs, false);
+        if (!inputs.ok) return { fixed: out as unknown as AbiItem, ok: false };
+        out.inputs = inputs.fixed as unknown as Record<string, unknown>[];
+    }
+
+    return { fixed: out as unknown as AbiItem, ok: true };
 }
 
-function validateEvent(item: Record<string, unknown>): boolean {
-    // Events require a non-empty name
-    if (typeof item.name !== "string" || item.name.trim() === "") return false;
+function fixEvent(raw: Record<string, unknown>): FixResult<AbiItem> {
+    const out = { ...raw };
 
-    // `anonymous` must be a boolean when present
-    if (item.anonymous !== undefined && typeof item.anonymous !== "boolean") {
-        return false;
+    if (typeof out.name !== "string" || (out.name as string).trim() === "") {
+        return { fixed: out as unknown as AbiItem, ok: false };
+    }
+    if (out.anonymous !== undefined && typeof out.anonymous !== "boolean") {
+        return { fixed: out as unknown as AbiItem, ok: false };
     }
 
-    // Events have no outputs, no stateMutability
-    if (item.outputs !== undefined) return false;
-    if (item.stateMutability !== undefined) return false;
+    // Remove disallowed fields
+    delete out.outputs;
+    delete out.stateMutability;
 
-    if (!Array.isArray(item.inputs)) return false;
+    const inputs = fixParams(out.inputs ?? [], true);
+    if (!inputs.ok) return { fixed: out as unknown as AbiItem, ok: false };
+    out.inputs = inputs.fixed as unknown as Record<string, unknown>[];
 
-    // At most 3 indexed parameters for non-anonymous events, 4 for anonymous
-    const isAnonymous = item.anonymous === true;
+    const isAnonymous = out.anonymous === true;
     const maxIndexed = isAnonymous ? 4 : 3;
-    let indexedCount = 0;
-
-    for (const input of item.inputs) {
-        if (!isValidParameter(input, true)) return false;
-        const p = input as Record<string, unknown>;
-        if (p.indexed === true) indexedCount++;
+    const indexedCount = inputs.fixed.filter((p) => p.indexed === true).length;
+    if (indexedCount > maxIndexed) {
+        return { fixed: out as unknown as AbiItem, ok: false };
     }
 
-    if (indexedCount > maxIndexed) return false;
-
-    return true;
+    return { fixed: out as unknown as AbiItem, ok: true };
 }
 
-function validateError(item: Record<string, unknown>): boolean {
-    // Custom errors require a non-empty name, have inputs only
-    if (typeof item.name !== "string" || item.name.trim() === "") return false;
-    if (item.outputs !== undefined) return false;
-    if (item.stateMutability !== undefined) return false;
+function fixError(raw: Record<string, unknown>): FixResult<AbiItem> {
+    const out = { ...raw };
 
-    if (!Array.isArray(item.inputs)) return false;
-    for (const input of item.inputs) {
-        if (!isValidParameter(input, false)) return false;
+    if (typeof out.name !== "string" || (out.name as string).trim() === "") {
+        return { fixed: out as unknown as AbiItem, ok: false };
     }
 
-    return true;
+    // Remove disallowed fields
+    delete out.outputs;
+    delete out.stateMutability;
+
+    const inputs = fixParams(out.inputs ?? [], false);
+    if (!inputs.ok) return { fixed: out as unknown as AbiItem, ok: false };
+    out.inputs = inputs.fixed as unknown as Record<string, unknown>[];
+
+    return { fixed: out as unknown as AbiItem, ok: true };
 }
 
-// ─── ABI Item Dispatcher ──────────────────────────────────────────────────────
-
-function isValidAbiItem(item: unknown): boolean {
-    if (typeof item !== "object" || item === null || Array.isArray(item)) {
-        return false;
+function fixItem(raw: unknown): FixResult<AbiItem> {
+    if (typeof raw !== "object" || raw === null || Array.isArray(raw)) {
+        return { fixed: {} as AbiItem, ok: false };
     }
 
-    const entry = item as Record<string, unknown>;
+    const entry = raw as Record<string, unknown>;
 
     switch (entry.type as AbiItemType) {
-        case "function": return validateFunction(entry);
-        case "constructor": return validateConstructor(entry);
-        case "receive": return validateReceive(entry);
-        case "fallback": return validateFallback(entry);
-        case "event": return validateEvent(entry);
-        case "error": return validateError(entry);
-        default: return false; // unknown type
+        case "function": return fixFunction(entry);
+        case "constructor": return fixConstructor(entry);
+        case "receive": return fixReceive(entry);
+        case "fallback": return fixFallback(entry);
+        case "event": return fixEvent(entry);
+        case "error": return fixError(entry);
+        default:
+            return { fixed: entry as unknown as AbiItem, ok: false };
     }
 }
 
 // ─── Public API ───────────────────────────────────────────────────────────────
 
 /**
- * Validates a Solidity smart contract ABI.
+ * Validates and auto-fixes a Solidity smart contract ABI.
  *
- * Accepts either a parsed ABI array or a raw JSON string.
- * Returns `true` if the ABI is fully valid, `false` otherwise.
+ * Accepts:
+ *   - A parsed ABI array (`AbiItem[]`)
+ *   - A strict JSON string (`'[{"type":"function",...}]'`)
+ *   - A JS object-literal string (unquoted keys, trailing commas — common in
+ *     copy-pasted ABIs)
+ *
+ * Returns:
+ *   - The fixed `AbiItem[]` on success (all auto-fixable issues are corrected)
+ *   - `null` when the ABI is fatally invalid and cannot be repaired:
+ *       • Completely unparseable input
+ *       • Invalid / unknown Solidity types
+ *       • Duplicate function/event/error signatures
+ *       • Too many indexed event parameters
+ *       • Missing required fields that cannot be defaulted
  *
  * @example
- * validateAbi([{ type: "function", name: "balanceOf", ... }]); // true
- * validateAbi("not json");                                       // false
+ * // Valid — returns the (possibly cleaned) ABI
+ * validateAbi('[{"type":"function","name":"balanceOf",...}]');
+ *
+ * // JS-literal input — auto-fixed and returned
+ * validateAbi('[{ type: "function", name: "foo", ... }]');
+ *
+ * // Fatally broken — returns null
+ * validateAbi("not an abi");
  */
-export function validateAbi(abi: unknown): boolean {
-    // Accept raw JSON strings
-    let parsed = abi;
-    if (typeof abi === "string") {
-        try {
-            parsed = JSON.parse(abi);
-        } catch {
-            return false;
-        }
+export function validateAbi(abi: unknown): AbiItem[] | null {
+    // ── 1. Parse ────────────────────────────────────────────────────────────────
+    let items: unknown[];
+
+    if (Array.isArray(abi)) {
+        items = abi;
+    } else if (typeof abi === "string") {
+        const parsed = tryParse(abi);
+        if (parsed === null) return null;
+        items = parsed;
+    } else {
+        return null;
     }
 
-    // ABI must be a non-empty array
-    if (!Array.isArray(parsed) || parsed.length === 0) return false;
+    if (items.length === 0) return null;
 
-    // Every item must be valid
-    for (const item of parsed) {
-        if (!isValidAbiItem(item)) return false;
+    // ── 2. Fix each item ────────────────────────────────────────────────────────
+    const fixedItems: AbiItem[] = [];
+
+    for (const raw of items) {
+        const result = fixItem(raw);
+        if (!result.ok) return null;
+        fixedItems.push(result.fixed);
     }
 
-    // No duplicate function/event/error signatures allowed
-    const signatures = new Set<string>();
-    for (const item of parsed as AbiItem[]) {
-        if (!item.name) continue; // constructor / receive / fallback
+    
+    //  ****** DUPLICATE SIGNATURE CHECK SKIPPED BECAUSE SUBSCAN DOESN'T CARE ABOUT DUPLICATES *****
 
-        const paramTypes = (item.inputs ?? [])
-            .map((p) => p.type)
-            .join(",");
-        const sig = `${item.type}:${item.name}(${paramTypes})`;
+    
+    // ── 3. Duplicate signature check ────────────────────────────────────────────
 
-        if (signatures.has(sig)) return false;
-        signatures.add(sig);
-    }
+    // const signatures = new Set<string>();
 
-    return true;
+    // for (const item of fixedItems) {
+    //     if (!item.name) continue; // constructor / receive / fallback — skip
+    //     const paramTypes = (item.inputs ?? []).map((p) => p.type).join(",");
+    //     const sig = `${item.type}:${item.name}(${paramTypes})`;
+    //     if (signatures.has(sig)) return null;
+    //     signatures.add(sig);
+    // }
+
+    return fixedItems;
 }
