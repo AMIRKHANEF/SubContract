@@ -29,6 +29,8 @@
 
   --color-accent-primary: var(--accent-primary);
   --color-accent-primary-hover: var(--accent-primary-hover);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-accent-tertiary: var(--accent-tertiary);
 
   --color-success: var(--success);
   --color-warning: var(--warning);
