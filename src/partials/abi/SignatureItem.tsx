@@ -16,7 +16,6 @@ export default function SignatureItem({ item }: { item: any }): ReactNode {
             collapseChildren={
                 <SignatureHeader
                     name={item.name}
-                    shortSignature={item.shortSignature}
                     state={item.stateMutability ?? item.kind}
                 />}
             withChevron
