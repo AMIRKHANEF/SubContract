@@ -42,7 +42,7 @@ export default function TabContent({ tab, parsedABI }: Props) {
             animate="center"
             exit="exit"
             transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
-            className="flex flex-col max-h-72 overflow-auto gap-2.5 pb-2.5"
+            className="flex flex-col gap-2.5 pb-2.5"
         >
             {content.map((item, index) => {
                 return (

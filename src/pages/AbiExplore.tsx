@@ -60,7 +60,7 @@ export default function AbiExplore() {
     console.log("parsedABI:", parsedABI);
 
     return (
-        <div className="section-container">
+        <div className="section-container max-h-screen overflow-auto">
             <PageTitle
                 text="ABI Explorer"
                 Icon={BookText}
