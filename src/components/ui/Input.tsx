@@ -9,9 +9,10 @@ interface Props {
     className?: string;
     error?: boolean;
     showPasteIcon?: boolean;
+    containerClassName?: string;
 }
 
-export default function Input({ onChange, onEnter, placeholder, className, value, error = false, showPasteIcon = false, }: Props) {
+export default function Input({ onChange, onEnter, placeholder, className, value, containerClassName, error = false, showPasteIcon = false, }: Props) {
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && onEnter) {
             onEnter();
@@ -36,7 +37,7 @@ export default function Input({ onChange, onEnter, placeholder, className, value
 
     return (
         <>
-            <div className="relative flex items-center w-full">
+            <div className={twMerge("relative flex items-center w-full", containerClassName)}>
                 <input
                     key={error ? "error" : "normal"} /* re-mounts to retrigger animation */
                     className={twMerge(

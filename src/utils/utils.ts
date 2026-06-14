@@ -37,3 +37,20 @@ export const toEllipsisAddress = (addr: string | undefined, count: number = 6) =
 
     return addr.slice(0, count) + '...';
 }
+
+export const availableWidth = (ref: React.RefObject<null>, maxWidth: number) => {
+    const usedWidth = (ref.current as unknown as { clientWidth: number })?.clientWidth ?? 0;
+
+    return maxWidth - usedWidth;
+}
+
+/**
+ * Capitalizes the first character of a string.
+ * @param {string} str - The string to capitalize.
+ * @returns {string} The capitalized string.
+ */
+export function capitalizeFirstWord(str: string | undefined): string {
+    if (!str || typeof str !== 'string') return '';
+
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}

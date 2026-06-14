@@ -3,12 +3,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useNavigation } from './hooks/useStore';
 import Home from './pages/Home';
 import { useMemo } from 'react';
-
-const variants = {
-  enter: (direction: number) => ({ x: direction > 0 ? '100%' : '-100%' }),
-  center: { x: 0 },
-  exit: (direction: number) => ({ x: direction > 0 ? '-100%' : '100%' }),
-};
+import AbiExplore from './pages/AbiExplore';
+import { variants } from './styles/style';
 
 export default function App () {
   const { currentPage, direction } = useNavigation();
@@ -17,6 +13,9 @@ export default function App () {
     switch (currentPage) {
       case 'Home':
         return <Home />;
+
+        case 'AbiExplore':
+        return <AbiExplore />;
     
       default:
         return <Home />;

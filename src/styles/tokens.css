@@ -19,6 +19,7 @@
   --bg-quaternary-hover: #ffffff0a;
   --bg-quinary: #0c111e;
   --bg-hover: #243244;
+  --bg-focused: #354458;
 
   /* Borders */
   --border-primary: #1f2937;
@@ -32,12 +33,15 @@
   /* Accent */
   --accent-primary: #e6007a;
   --accent-primary-hover: #ff0a8a;
+  --accent-secondary: #4b4b6e;
+  --accent-tertiary: #5a5a8a;
 
   /* States */
   --success: #22c55e;
   --warning: #f59e0b;
   --error: #ef4444;
   --info: #3b82f6;
+  --event: #a4c4d1;
 
   /*
   ----------------------------------------------------------------------
@@ -66,6 +70,8 @@
   ----------------------------------------------------------------------
   */
 
+  --radius-2xs: 4px;
+  --radius-xs: 6px;
   --radius-sm: 8px;
   --radius-md: 10px;
   --radius-lg: 12px;

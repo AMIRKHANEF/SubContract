@@ -11,9 +11,10 @@ interface ScrollingTextBoxProps {
     className?: string;
     textClassName?: string;
     scrollOnHover?: boolean;
+    preserveWidth?: boolean;
 }
 
-function ScrollingTextBox({ scrollOnHover = false, className, text, textClassName, width }: ScrollingTextBoxProps) {
+function ScrollingTextBox({ scrollOnHover = false, className, text, textClassName, width, preserveWidth = false }: ScrollingTextBoxProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const textRef = useRef<HTMLSpanElement>(null);
     const hovered = useIsHovered(containerRef);
@@ -36,7 +37,7 @@ function ScrollingTextBox({ scrollOnHover = false, className, text, textClassNam
         });
     }, [hovered, scrollOnHover, text]);
 
-    const animationDuration = useMemo(() => Math.max(10, textWidth / 50), [textWidth]);
+    const animationDuration = useMemo(() => Math.min(50, textWidth / 50), [textWidth]);
 
     const isAnimating = shouldScroll && (!scrollOnHover || hovered);
     const isPaused = shouldScroll && (scrollOnHover ? !hovered : hovered);
@@ -45,7 +46,7 @@ function ScrollingTextBox({ scrollOnHover = false, className, text, textClassNam
         <div
             ref={containerRef}
             className={twMerge("relative overflow-hidden rounded-lg w-fit", className)}
-            style={{ maxWidth: `${width}px` }}
+            style={{ maxWidth: `${width}px`, ...(preserveWidth ? { width } : {}) }}
         >
             {/* Left fade */}
             {shouldScroll && (
