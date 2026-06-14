@@ -4,6 +4,7 @@ import Collapse from "@/components/ui/Collapse";
 import type { ParsedError, ParsedEvent, ParsedFunction, ParsedSpecialItem } from "@/utils/ABI/ABIParser";
 import { type ReactNode } from "react";
 import SignatureHeader from "./SignatureHeader";
+import SignatureContent from "./SignatureContent";
 
 export default function SignatureItem({ item }: { item: ParsedFunction }): ReactNode
 export default function SignatureItem({ item }: { item: ParsedEvent }): ReactNode
@@ -21,7 +22,9 @@ export default function SignatureItem({ item }: { item: any }): ReactNode {
             withChevron
             className="p-2.5"
         >
-            <></>
+            <SignatureContent
+                item={item}
+            />
         </Collapse>
     );
 }
