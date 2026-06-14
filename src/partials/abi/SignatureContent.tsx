@@ -29,14 +29,20 @@ const flagStyle = (isIndex: boolean) => {
         return "bg-[#5050781f] text-[#6060a0] border-[#50507833]";
 }
 
-function InOutPut({ items, type }: { items: ParsedParameter[]; type: string }) {
-    if (items.length === 0) return null;
+function InOutPut({ items, type }: { items: ParsedParameter[]; type: "parameters" | "inputs" | "returns" }) {
+    if (items.length === 0 && type === "returns") return null;
 
     return (
         <div className="flex flex-col gap-1.5">
-            <p className="uppercase text-xs text-accent-secondary font-medium mb-1">
-                {type}
-            </p>
+            <div className="flex flex-row items-center gap-1.5 mb-1">
+                <p className="uppercase text-xs text-accent-secondary font-medium w-fit">
+                    {type}
+                </p>
+                <p className="uppercase text-xs text-accent-secondary font-medium w-fit">
+                    {items.length}
+                </p>
+                <Divider className="flex-1 text-accent-secondary/20" />
+            </div>
             {items.map((item, index) => {
                 return (
                     <div className="flex flex-row gap-1.5">
@@ -49,6 +55,12 @@ function InOutPut({ items, type }: { items: ParsedParameter[]; type: string }) {
                     </div>
                 );
             })}
+            {items.length === 0 &&
+                <div className="flex flex-row gap-1.5">
+                    <p className="text-accent-tertiary text-xs">-</p>
+                    <p className="text-text-secondary text-xs">no parameters</p>
+                </div>
+            }
         </div>
     );
 }
