@@ -37,7 +37,7 @@ function ScrollingTextBox({ scrollOnHover = false, className, text, textClassNam
         });
     }, [hovered, scrollOnHover, text]);
 
-    const animationDuration = useMemo(() => Math.max(10, textWidth / 50), [textWidth]);
+    const animationDuration = useMemo(() => Math.min(50, textWidth / 50), [textWidth]);
 
     const isAnimating = shouldScroll && (!scrollOnHover || hovered);
     const isPaused = shouldScroll && (scrollOnHover ? !hovered : hovered);
