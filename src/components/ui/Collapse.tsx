@@ -26,22 +26,23 @@ interface Props {
     collapseChildren: ReactNode;
     children: ReactNode;
     withChevron?: boolean;
+    className?: string;
 }
 
-export default function Collapse({ children, collapseChildren, withChevron }: Props) {
+export default function Collapse({ children, collapseChildren, className, withChevron }: Props) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     return (
         <Card className='p-0'>
             {/* Header / Trigger */}
             <div
-                className={'relative cursor-pointer p-4.5'}
+                className={twMerge('relative cursor-pointer p-4.5', className)}
                 onClick={() => setIsOpen(!isOpen)}
             >
                 {collapseChildren}
                 {withChevron &&
                     <ChevronDownIcon
-                        className={`absolute right-5 top-4 text-(--accent-primary) transform transition-transform
+                        className={`absolute right-4 top-[calc((100%-22px)/2)] text-(--accent-primary) transform transition-transform
                             ${isOpen ? 'rotate-180' : ''}`}
                         fontSize={20}
                     />
