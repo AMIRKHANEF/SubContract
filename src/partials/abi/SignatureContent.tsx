@@ -1,22 +1,21 @@
 import CopyButtonWithText from "@/components/CopyButtonWithText";
 import Divider from "@/components/ui/Divider";
-import ScrollingTextBox from "@/components/ui/ScrollingTextBox";
 import type { ParsedError, ParsedEvent, ParsedFunction, ParsedParameter, ParsedSpecialItem } from "@/utils/ABI/ABIParser";
-import type { ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
+import { BuildColoredSig, functionVariableNameColor, functionVariableTypeColor } from "./Buildcoloredsig";
+import { twMerge } from "tailwind-merge";
 
-function SignaturePlace({ signature }: { signature: string }) {
+function SignaturePlace({ item }: { item: ParsedFunction | ParsedEvent | ParsedError | ParsedSpecialItem }) {
     return (
         <div className="flex flex-row justify-between my-1.5">
-            <ScrollingTextBox
-                text={signature}
-                width={285}
-                textClassName="font-light text-2xs text-text-secondary"
-                className="p-2 rounded-sm bg-bg-quinary"
-                scrollOnHover
-                preserveWidth
+            <BuildColoredSig
+                type={(item as unknown as { type: string }).type}
+                inputs={item.inputs}
+                name={item.name}
+                outputs={item.outputs}
             />
             <CopyButtonWithText
-                text={signature}
+                text={item.signature}
             />
         </div>
     );
@@ -45,14 +44,24 @@ function InOutPut({ items, type }: { items: ParsedParameter[]; type: "parameters
             </div>
             {items.map((item, index) => {
                 return (
-                    <div className="flex flex-row gap-1.5">
-                        <p className="text-accent-tertiary text-xs">{index}</p>
-                        <p className="text-text-secondary text-xs">{item.type}</p>
-                        <p className="text-text-secondary text-xs">{item.name ?? "Unnamed"}</p>
-                        <p className={`border-default ${flagStyle(!!item.indexed)} p-0.5 text-xs rounded-xs mr-0 ml-auto`}>
-                            {item.indexed ? "Indexed" : "Data"}
-                        </p>
-                    </div>
+                    <Fragment key={index}>
+                        <div className="flex flex-row gap-1.5 items-center h-5">
+                            <p className="text-accent-tertiary text-xs">{index}</p>
+                            <p className={twMerge("text-text-secondary text-xs", functionVariableTypeColor)}>
+                                {item.type}
+                            </p>
+                            <p className={twMerge("text-text-secondary text-xs", functionVariableNameColor)}>
+                                {item.name ?? "Unnamed"}
+                            </p>
+                            {type === "parameters" &&
+                                <p className={twMerge("border-default px-0.75 py-px text-xs rounded-xs ml-1", flagStyle(!!item.indexed))}>
+                                    {item.indexed ? "indexed" : "data"}
+                                </p>}
+                        </div>
+                        {(index + 1) !== items.length &&
+                            <Divider className="text-accent-secondary/20" />
+                        }
+                    </Fragment>
                 );
             })}
             {items.length === 0 &&
@@ -70,10 +79,11 @@ interface SignatureItemProps {
 }
 
 export default function SignatureContent({ item }: SignatureItemProps): ReactNode {
+    console.log('item:', item)
     return (
         <div className="flex flex-col gap-2.5">
-            <SignaturePlace signature={item.signature} />
-            <InOutPut items={item.inputs} type={item.inputs?.[0]?.type === "event" ? "parameters" : "inputs"} />
+            <SignaturePlace item={item} />
+            <InOutPut items={item.inputs} type={item.kind === "event" ? "parameters" : "inputs"} />
             {![item.inputs.length, item.outputs.length].includes(0) &&
                 <Divider className="bg-accent-secondary my-1" />
             }
