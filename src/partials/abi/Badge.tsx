@@ -23,5 +23,5 @@ const variants = {
     event: 'bg-event/10 text-event',
     error: 'bg-error/10 text-error',
     payable: 'bg-warning/10 text-warning',
-    ctor: 'bg-info/10 text-info'
+    constructor: 'bg-info/10 text-info'
 };
