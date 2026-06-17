@@ -3,7 +3,7 @@ import type { Chain } from "@/utils/types";
 export interface Contract {
     address: string;
     chainGenesisHash: string;
-    abi?: unknown[];
+    abi?: string;
     label?: string;
 }
 
