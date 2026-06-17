@@ -64,3 +64,21 @@ export function capitalizeFirstWord(str: string | undefined): string {
 
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export const getSubscanChainId = (network: HexString | string | undefined) => {
+    if (!network) return undefined;
+
+    const chainName = chains
+        .find(({ genesisHash, chain }) => !!chain && (genesisHash === chain || chain === network))
+        ?.chain;
+
+    switch (chainName?.toLowerCase()) {
+        case 'polkadot asset hub':
+            return 'assethub-polkadot';
+        case 'paseo asset hub':
+            return 'assethub-paseo';
+
+        default:
+            return 'assethub-polkadot';
+    }
+}
