@@ -21,9 +21,7 @@ export default function SignatureItem({ item }: { item: any }): ReactNode {
             withChevron
             className="p-2.5"
         >
-            <SignatureContent
-                item={item}
-            />
+            <SignatureContent item={item} />
         </Collapse>
     );
 }

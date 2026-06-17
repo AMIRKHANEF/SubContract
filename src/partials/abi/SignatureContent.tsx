@@ -79,7 +79,6 @@ interface SignatureItemProps {
 }
 
 export default function SignatureContent({ item }: SignatureItemProps): ReactNode {
-    console.log('item:', item)
     return (
         <div className="flex flex-col gap-2.5">
             <SignaturePlace item={item} />
