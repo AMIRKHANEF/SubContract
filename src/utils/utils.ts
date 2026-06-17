@@ -1,4 +1,14 @@
 import { isEthereumAddress } from '@polkadot/util-crypto'
+import type { HexString } from '@polkadot/util-crypto/cjs/helpers';
+import chains from './chains';
+
+export const getChainName = (genesis: string | HexString | undefined) => {
+    if (!genesis) return undefined;
+
+    return chains
+        .find(({ genesisHash, chain }) => genesisHash === genesis && !!chain)
+        ?.chain;
+}
 
 export const sanitizeChainName = (chainName: string | undefined) => {
     if (!chainName) {
