@@ -3,7 +3,7 @@ import type { Chain } from "./types";
 export const EXTENSION_NAME = "SubContract";
 
 export const PASEO_ASSET_HUB_GENESIS_HASH = '0xd6eec26135305a8ad257a20d003357284c8aa03d0bdb2b357ab0a22371e11ef2';
-export const POLKADOT_ASSET_HUB_GENESIS_HASH = '0x67f9723393ef76214df0118c34bbbd3dbebc8ed46a10973a8c969d48fe7598c9';
+export const POLKADOT_ASSET_HUB_GENESIS_HASH = '0x68d56f15f85d3136970ec16946040bc1752654e906147f7e43e9d539d7c3de2f';
 
 export const STORAGE_KEY = "SubContract_storage";
 
