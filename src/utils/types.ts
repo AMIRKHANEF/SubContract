@@ -74,3 +74,11 @@ export interface ContractTransaction {
     transaction_id: number;
     // txn_type: number;
 }
+
+export interface ContractTokenBalance {
+    symbol: string;
+    balance: string;
+    decimals: number;
+    price: string;
+}
+
