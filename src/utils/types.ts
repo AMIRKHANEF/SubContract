@@ -82,3 +82,7 @@ export interface ContractTokenBalance {
     price: string;
 }
 
+export interface ContractTokenBalancesResponse {
+    native?: ContractTokenBalance[];
+    assets?: ContractTokenBalance[];
+}
