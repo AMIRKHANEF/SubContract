@@ -41,6 +41,27 @@ const contractsSlice = createSlice({
         clearWatchedContracts(state) {
             state.watchedContracts = [];
         },
+        updateContractInfo(state, action: PayloadAction<Contract>) {
+            const updatedContract = action.payload;
+
+            // Update activeContract if it matches the updated contract
+            if (
+                state.activeContract &&
+                state.activeContract.address === updatedContract.address &&
+                state.activeContract.chainGenesisHash === updatedContract.chainGenesisHash
+            ) {
+                state.activeContract = updatedContract;
+            }
+
+            // Update contract in watched list if it matches the updated contract
+            const contractToUpdateIndex = state.watchedContracts.findIndex(({ address, chainGenesisHash }) =>
+                address === updatedContract.address && chainGenesisHash === updatedContract.chainGenesisHash
+            );
+
+            if (contractToUpdateIndex !== -1) {
+                state.watchedContracts[contractToUpdateIndex] = updatedContract;
+            }
+        }
     },
 });
 
@@ -50,6 +71,7 @@ export const {
     addWatchedContract,
     removeWatchedContract,
     clearWatchedContracts,
+    updateContractInfo
 } = contractsSlice.actions;
 
 export default contractsSlice.reducer;
