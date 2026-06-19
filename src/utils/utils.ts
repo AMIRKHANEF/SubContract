@@ -127,5 +127,38 @@ export function findMethodName(
     return method;
 }
 
+/**
+ * Formats a Solidity function signature into a human-readable form.
+ *
+ * @param {string} signature - A Solidity function signature.
+ * @returns {string} A formatted signature.
+ *
+ * @example
+ * formatFunctionSignature("approve(address,uint256)");
+ * // => "Approve (address, uint256)"
+ *
+ * @example
+ * formatFunctionSignature("transferFrom(address,address,uint256)");
+ * // => "TransferFrom (address, address, uint256)"
+ */
+export function formatFunctionSignature(signature: string): string {
+    const match = /^([^(]+)\((.*)\)$/.exec(signature);
+
+    if (!match) {
+        throw new Error(`Invalid function signature: "${signature}"`);
     }
+
+    const [, functionName, parameters] = match;
+
+    return `${capitalize(functionName)} (${parameters.replaceAll(",", ", ")})`;
+}
+
+/**
+ * Capitalizes the first character of a string.
+ *
+ * @param {string} value
+ * @returns {string}
+ */
+function capitalize(value: string): string {
+    return value.charAt(0).toUpperCase() + value.slice(1);
 }
