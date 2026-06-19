@@ -69,16 +69,15 @@ export const getSubscanChainId = (network: HexString | string | undefined) => {
     if (!network) return undefined;
 
     const chainName = chains
-        .find(({ genesisHash, chain }) => !!chain && (genesisHash === chain || chain === network))
+        .find(({ genesisHash, chain }) => (genesisHash === network || chain === network))
         ?.chain;
 
-    switch (chainName?.toLowerCase()) {
-        case 'polkadot asset hub':
-            return 'assethub-polkadot';
-        case 'paseo asset hub':
-            return 'assethub-paseo';
+    if (!chainName) return "assethub-polkadot";
 
-        default:
-            return 'assethub-polkadot';
+    if (chainName.toLowerCase().includes("paseo")) return "assethub-paseo";
+
+    return "assethub-polkadot";
+}
+
     }
 }
