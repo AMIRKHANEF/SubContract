@@ -7,6 +7,8 @@ export const POLKADOT_ASSET_HUB_GENESIS_HASH = '0x68d56f15f85d3136970ec16946040b
 
 export const STORAGE_KEY = "SubContract_storage";
 
+export const DEFAULT_DECIMAL_POINT_DIGIT = 2;
+
 export const DISABLED_NETWORKS = ['3DP network', 'xx network', 'Polkadex Mainnet', 'Stafi', 'Peaq Network', 'Genshiro Network'];
 
 export const POLKADOT_ASSET_HUB_CHAIN: Chain = {
