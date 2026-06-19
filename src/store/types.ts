@@ -5,7 +5,9 @@ export interface Contract {
     chainGenesisHash: string;
     abi?: string | null;
     label?: string;
-    info: ContractInfo;
+    info?: ContractInfo;
+    activities?: ContractActivity[];
+    balances?: ContractTokenBalance[];
 }
 
 export interface ContractInfo {
