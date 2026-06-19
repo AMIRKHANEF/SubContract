@@ -79,5 +79,53 @@ export const getSubscanChainId = (network: HexString | string | undefined) => {
     return "assethub-polkadot";
 }
 
+/**
+ * Ensures a hexadecimal string is represented with a `0x` prefix.
+ *
+ * @param value - The hexadecimal string to normalize.
+ * @returns The normalized hexadecimal string.
+ *
+ * @example
+ * normalizeHex("84a15da1");    // "0x84a15da1"
+ * normalizeHex("0x84a15da1");  // "0x84a15da1"
+ */
+function normalizeHex(value: string): string {
+    return value.startsWith("0x") ? value : `0x${value}`;
+}
+
+/**
+ * Finds the first key whose value matches the provided method.
+ *
+ * @param methods - A map of method names to their identifiers.
+ * @param method - The method identifier to search for.
+ *
+ * @returns The corresponding method name if found; otherwise `undefined`.
+ *
+ * @example
+ * const methods = {
+ *   transfer: "0x84a15da1",
+ *   approve: "0x095ea7b3",
+ * };
+ *
+ * findMethodName(methods, "0x095ea7b3");
+ * // => "approve"
+ */
+export function findMethodName(
+    methods: Record<string, string> | null | undefined,
+    method: string | undefined
+): string | undefined {
+    if (!methods || !method) return method;
+
+    const normalizedMethod = normalizeHex(method);
+
+    for (const [name, value] of Object.entries(methods)) {
+        if (normalizeHex(value) === normalizedMethod) {
+            return formatFunctionSignature(name);
+        }
+    }
+
+    return method;
+}
+
     }
 }
