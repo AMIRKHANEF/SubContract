@@ -1,4 +1,4 @@
-import type { Chain } from "@/utils/types";
+import type { Chain, ContractTokenBalance } from "@/utils/types";
 
 export interface Contract {
     address: string;
@@ -23,6 +23,23 @@ export interface ContractInfo {
     transactionCount: number;
     methodIdentifiers: Record<string, string> | null;
 }
+
+export interface ContractActivity {
+    hash: string;
+    from: string;
+    value: string;
+    gasPrice: string;
+    gasUsed: string;
+    success: boolean;
+    blockTimestamp: number;
+    contract: string;
+    contractName: string;
+    method: string
+    effectiveGasPrice: string;
+    transactionId: number;
+    // txnType: number;
+}
+
 
 export interface Account {
     address: string;
