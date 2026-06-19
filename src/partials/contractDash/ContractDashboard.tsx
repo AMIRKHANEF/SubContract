@@ -1,31 +1,28 @@
 import Card from "@/components/ui/Card";
-import SectionTitle from "@/components/ui/SectionTitle";
 import { useContracts } from "@/hooks/useStore";
 import ContractInfo from "./ContractInfo";
 import RecentActivity from "./RecentActivity";
+import ContractAsset from "./ContractAssets";
 
 export default function ContractDashboard() {
     const { activeContract } = useContracts();
 
     if (!activeContract) return null;
 
-    const { abi, activities, address, info } = activeContract;
+    const { abi, activities, address, balances, info } = activeContract;
 
     const isVerified = !!abi;
 
     return (
-        <Card className="flex flex-col gap-2.5">
+        <Card className="flex flex-col gap-3.75">
             <ContractInfo
                 contractAddress={address}
                 contractName={info?.contractName}
                 isVerified={isVerified}
             />
-            <div className="flex flex-col gap-2">
-                <div className="flex flex-row gap-2 items-center">
-                    <SectionTitle text="Assets" />
-                    <p className="text-xsm font-normal text-text-secondary">$10.45</p>
-                </div>
-            </div>
+            <ContractAsset
+                balances={balances}
+            />
             <RecentActivity
                 activities={activities}
                 info={info}
