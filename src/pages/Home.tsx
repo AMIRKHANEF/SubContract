@@ -2,6 +2,7 @@ import PopUp from "@/components/PopUp";
 import Utilities from "@/components/Utilities";
 import WatchContract from "@/components/WatchContract";
 import Content from "@/partials/Content";
+import ContractInfo from "@/partials/contractDash/ContractDashboard";
 import Footer from "@/partials/Footer";
 import Header from "@/partials/Header";
 import { PopUps } from "@/utils/constants";
@@ -15,6 +16,7 @@ export default function Home() {
             <Header />
             <Content>
                 <WatchContract setPopup={setPopup} />
+                <ContractInfo />
                 <Utilities setPopup={setPopup} />
             </Content>
             <Footer />

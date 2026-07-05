@@ -1,4 +1,14 @@
 import { isEthereumAddress } from '@polkadot/util-crypto'
+import type { HexString } from '@polkadot/util-crypto/cjs/helpers';
+import chains from './chains';
+
+export const getChainName = (genesis: string | HexString | undefined) => {
+    if (!genesis) return undefined;
+
+    return chains
+        .find(({ genesisHash, chain }) => genesisHash === genesis && !!chain)
+        ?.chain;
+}
 
 export const sanitizeChainName = (chainName: string | undefined) => {
     if (!chainName) {
@@ -53,4 +63,102 @@ export function capitalizeFirstWord(str: string | undefined): string {
     if (!str || typeof str !== 'string') return '';
 
     return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export const getSubscanChainId = (network: HexString | string | undefined) => {
+    if (!network) return undefined;
+
+    const chainName = chains
+        .find(({ genesisHash, chain }) => (genesisHash === network || chain === network))
+        ?.chain;
+
+    if (!chainName) return "assethub-polkadot";
+
+    if (chainName.toLowerCase().includes("paseo")) return "assethub-paseo";
+
+    return "assethub-polkadot";
+}
+
+/**
+ * Ensures a hexadecimal string is represented with a `0x` prefix.
+ *
+ * @param value - The hexadecimal string to normalize.
+ * @returns The normalized hexadecimal string.
+ *
+ * @example
+ * normalizeHex("84a15da1");    // "0x84a15da1"
+ * normalizeHex("0x84a15da1");  // "0x84a15da1"
+ */
+function normalizeHex(value: string): string {
+    return value.startsWith("0x") ? value : `0x${value}`;
+}
+
+/**
+ * Finds the first key whose value matches the provided method.
+ *
+ * @param methods - A map of method names to their identifiers.
+ * @param method - The method identifier to search for.
+ *
+ * @returns The corresponding method name if found; otherwise `undefined`.
+ *
+ * @example
+ * const methods = {
+ *   transfer: "0x84a15da1",
+ *   approve: "0x095ea7b3",
+ * };
+ *
+ * findMethodName(methods, "0x095ea7b3");
+ * // => "approve"
+ */
+export function findMethodName(
+    methods: Record<string, string> | null | undefined,
+    method: string | undefined
+): string | undefined {
+    if (!methods || !method) return method;
+
+    const normalizedMethod = normalizeHex(method);
+
+    for (const [name, value] of Object.entries(methods)) {
+        if (normalizeHex(value) === normalizedMethod) {
+            return formatFunctionSignature(name);
+        }
+    }
+
+    return method;
+}
+
+/**
+ * Formats a Solidity function signature into a human-readable form.
+ *
+ * @param {string} signature - A Solidity function signature.
+ * @returns {string} A formatted signature.
+ *
+ * @example
+ * formatFunctionSignature("approve(address,uint256)");
+ * // => "Approve (address, uint256)"
+ *
+ * @example
+ * formatFunctionSignature("transferFrom(address,address,uint256)");
+ * // => "TransferFrom (address, address, uint256)"
+ */
+export function formatFunctionSignature(signature: string): string {
+    const match = /^([^(]+)\((.*)\)$/.exec(signature);
+
+    if (!match) {
+        throw new Error(`Invalid function signature: "${signature}"`);
+    }
+
+    const [, functionName, parameters] = match;
+
+    return `${capitalize(functionName)} (${parameters.replaceAll(",", ", ")})`;
+}
+
+/**
+ * Capitalizes the first character of a string.
+ *
+ * @param {string} value
+ * @returns {string}
+ */
+function capitalize(value: string): string {
+    return value.charAt(0).toUpperCase() + value.slice(1);
 }

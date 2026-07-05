@@ -1,11 +1,45 @@
-import type { Chain } from "@/utils/types";
+import type { Chain, ContractTokenBalance } from "@/utils/types";
 
 export interface Contract {
     address: string;
     chainGenesisHash: string;
-    abi?: unknown[];
+    abi?: string | null;
     label?: string;
+    info?: ContractInfo;
+    activities?: ContractActivity[];
+    balances?: ContractTokenBalance[];
 }
+
+export interface ContractInfo {
+    blockNumber: number;
+    compilerVersion: string;
+    contractName: string;
+    deployAt: number;
+    deployer: string;
+    evmVersion: string;
+    verifySource: string;
+    verifyStatus: string;
+    verifyTime: number;
+    transactionCount: number;
+    methodIdentifiers: Record<string, string> | null;
+}
+
+export interface ContractActivity {
+    hash: string;
+    from: string;
+    value: string;
+    gasPrice: string;
+    gasUsed: string;
+    success: boolean;
+    blockTimestamp: number;
+    contract: string;
+    contractName: string;
+    method: string
+    effectiveGasPrice: string;
+    transactionId: number;
+    // txnType: number;
+}
+
 
 export interface Account {
     address: string;

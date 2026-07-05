@@ -1,6 +1,6 @@
 import { useAppSelector, useAppDispatch } from "./useAppStore";
 import { setSelectedChain, clearSelectedChain } from "../store/slices/networkSlice";
-import { setActiveContract, clearActiveContract, addWatchedContract, removeWatchedContract, } from "../store/slices/contractsSlice";
+import { setActiveContract, clearActiveContract, addWatchedContract, removeWatchedContract, updateContractInfo, } from "../store/slices/contractsSlice";
 import { setAccounts, addAccount, removeAccount, setActiveAccount, clearActiveAccount, } from "../store/slices/accountsSlice";
 import { goHome, navigateTo } from "../store/slices/navigationSlice";
 import type { Contract, Account, Page, Direction } from "../store/types";
@@ -32,6 +32,7 @@ export function useContracts() {
         clearActiveContract: () => dispatch(clearActiveContract()),
         addWatchedContract: (contract: Contract) => dispatch(addWatchedContract(contract)),
         removeWatchedContract: (contract: Contract) => dispatch(removeWatchedContract(contract)),
+        updateContractInfo: (contract: Partial<Contract>) => dispatch(updateContractInfo(contract)),
     };
 }
 

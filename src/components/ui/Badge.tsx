@@ -10,7 +10,8 @@ export default function Badge({ text, type, className }: Props) {
     return (
         <div className={twMerge(`
             inline-flex items-center justify-center py-1
-            px-2.5 rounded-[999px] text-xs font-medium
+            px-2.5 rounded-full text-xs font-bold
+            w-fit h-fit uppercase
             ${variants[type]}
         `, className)}>
             {text}

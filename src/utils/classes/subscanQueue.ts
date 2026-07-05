@@ -50,15 +50,11 @@ class SubscanRequestQueue {
       }
 
       try {
-        const response = await fetch(task.url, {
-          ...task.options,
-          headers: {
-            // 'Content-Type': 'application/json',
-            // Accept: 'application/json',
-            "X-API-KEY": process.env.SUBSCAN_API_KEY ?? "",
-            ...(task.options?.headers ?? {})
-          }
-        });
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("X-API-KEY", "6cba978cd0604cf6bc444693d5a50179");
+
+        const response = await fetch(task.url, { ...task.options, headers: myHeaders });
 
         if (!response.ok) {
           throw new Error(

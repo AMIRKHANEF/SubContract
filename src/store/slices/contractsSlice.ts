@@ -41,6 +41,32 @@ const contractsSlice = createSlice({
         clearWatchedContracts(state) {
             state.watchedContracts = [];
         },
+        updateContractInfo(state, action: PayloadAction<Partial<Contract>>) {
+            const patch = action.payload;
+
+            if (
+                state.activeContract &&
+                state.activeContract.address === patch.address &&
+                state.activeContract.chainGenesisHash === patch.chainGenesisHash
+            ) {
+                state.activeContract = {
+                    ...state.activeContract,
+                    ...patch,
+                };
+            }
+
+            const index = state.watchedContracts.findIndex(c =>
+                c.address === patch.address &&
+                c.chainGenesisHash === patch.chainGenesisHash
+            );
+
+            if (index !== -1) {
+                state.watchedContracts[index] = {
+                    ...state.watchedContracts[index],
+                    ...patch,
+                };
+            }
+        }
     },
 });
 
@@ -50,6 +76,7 @@ export const {
     addWatchedContract,
     removeWatchedContract,
     clearWatchedContracts,
+    updateContractInfo
 } = contractsSlice.actions;
 
 export default contractsSlice.reducer;
