@@ -28,7 +28,6 @@ export default function ContractAsset({ balances }: Props) {
                 <p className="text-xsm font-normal text-text-secondary">${totalBalanceInDollar}</p>
             </div>
             <div className="flex flex-col gap-2 bg-bg-quinary p-2 px-3 rounded-sm">
-
                 {balances?.map(({ symbol, balance, decimals, price }, index) => {
                     return (
                         <Fragment key={index}>
