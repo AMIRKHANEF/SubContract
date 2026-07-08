@@ -3,6 +3,7 @@ import { useContracts } from "@/hooks/useStore";
 import ContractInfo from "./ContractInfo";
 import RecentActivity from "./RecentActivity";
 import ContractAsset from "./ContractAssets";
+import ContractMetadata from "@/components/ContractMetadata";
 
 export default function ContractDashboard() {
     const { activeContract } = useContracts();
@@ -20,6 +21,7 @@ export default function ContractDashboard() {
                 contractName={info?.contractName}
                 isVerified={isVerified}
             />
+            <ContractMetadata info={info} />
             <ContractAsset
                 balances={balances}
             />
