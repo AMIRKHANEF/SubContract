@@ -16,10 +16,10 @@ export default function App () {
         return <Home />;
 
         case 'AbiExplore':
-        return <ContractABI />;
+        return <AbiExplore />;
 
         case 'ContractABI':
-        return <AbiExplore />;
+        return <ContractABI />;
     
       default:
         return <Home />;
