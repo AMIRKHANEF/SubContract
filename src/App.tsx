@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import { useMemo } from 'react';
 import AbiExplore from './pages/AbiExplore';
 import { variants } from './styles/style';
+import ContractABI from './pages/ContractABI';
 
 export default function App () {
   const { currentPage, direction } = useNavigation();
@@ -15,6 +16,9 @@ export default function App () {
         return <Home />;
 
         case 'AbiExplore':
+        return <ContractABI />;
+
+        case 'ContractABI':
         return <AbiExplore />;
     
       default:
