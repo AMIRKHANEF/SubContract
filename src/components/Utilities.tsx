@@ -1,6 +1,5 @@
 import type { PopUps } from "@/utils/constants";
 import { features, pages } from "../../content";
-import Collapse from "./ui/Collapse";
 import SectionTitle from "./ui/SectionTitle";
 import UtilityItem from "./UtilityItem";
 import { useNavigation } from "@/hooks/useStore";
@@ -9,15 +8,11 @@ export default function Utilities({ setPopup }: { setPopup: (popup: PopUps) => v
     const { navigateTo } = useNavigation();
 
     return (
-        <Collapse
-            collapseChildren={
-                <SectionTitle
-                    text="Developer Utilities"
-                />
-            }
-            withChevron
-        >
-            <div className="grid grid-cols-2 gap-3">
+        <>
+            <SectionTitle
+                text="Developer Utilities"
+            />
+            <div className="grid grid-cols-2 gap-3 mt-2.5">
                 {features.map(({ description, icon, title, popup }, index) => (
                     <UtilityItem
                         key={index}
@@ -37,6 +32,6 @@ export default function Utilities({ setPopup }: { setPopup: (popup: PopUps) => v
                     />
                 ))}
             </div>
-        </Collapse>
+        </>
     );
 }

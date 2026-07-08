@@ -1,4 +1,5 @@
 import PopUp from "@/components/PopUp";
+import DrawerCollapse from "@/components/ui/DrawerCollapse";
 import Utilities from "@/components/Utilities";
 import WatchContract from "@/components/WatchContract";
 import Content from "@/partials/Content";
@@ -17,8 +18,14 @@ export default function Home() {
             <Content>
                 <WatchContract setPopup={setPopup} />
                 <ContractInfo />
-                <Utilities setPopup={setPopup} />
+                {/* <Utilities setPopup={setPopup} /> */}
             </Content>
+
+            {/* The collapsible drawer containing the utilities, placed directly above the footer */}
+            <DrawerCollapse>
+                <Utilities setPopup={setPopup} />
+            </DrawerCollapse>
+
             <Footer />
             <PopUp popup={popup} setPopup={setPopup} />
         </div>
