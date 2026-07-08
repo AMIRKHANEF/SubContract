@@ -3,12 +3,9 @@ import DescriptionText from "@/components/ui/DescriptionText";
 import Input from "@/components/ui/Input";
 import PageTitle from "@/components/ui/PageTitle";
 import { useNavigation } from "@/hooks/useStore";
-import TabContent from "@/partials/abi/TabContent";
-import TabItem from "@/partials/abi/TabItem";
-import { variants } from "@/styles/style";
+import ABIStructured from "@/partials/abi/ABIStructured";
 import { ABITab, parseABI, type ParsedABI } from "@/utils/ABI/ABIParser";
 import { validateAbi } from "@/utils/ABI/validateABI";
-import { motion } from "framer-motion";
 import { BookText } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 
@@ -18,7 +15,6 @@ export default function AbiExplore() {
     const [rawInput, setRawInput] = useState<string | undefined>();
     const [parsedABI, setParsedABI] = useState<ParsedABI | undefined>();
     const [error, setError] = useState<boolean>(false);
-    const [selectedTab, setSelectedTab] = useState<ABITab>(ABITab.Functions);
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement, Element>) => {
         try {
@@ -87,30 +83,10 @@ export default function AbiExplore() {
                 />
             </div>
             {tabContent &&
-                <motion.div
-                    custom={1}
-                    variants={variants}
-                    initial="enter"
-                    animate="center"
-                    transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
-                    className="flex flex-col gap-2.5 pb-2.5"
-                >
-                    <div className="flex flex-row gap-1.5 items-center">
-                        {tabContent.map(({ count, name }, index) => (
-                            <TabItem
-                                count={count}
-                                name={name}
-                                onClick={() => setSelectedTab(name)}
-                                isSelected={selectedTab === name}
-                                key={index}
-                            />
-                        ))}
-                    </div>
-                    <TabContent
-                        tab={selectedTab}
-                        parsedABI={parsedABI}
-                    />
-                </motion.div>
+                <ABIStructured
+                    tabContent={tabContent}
+                    parsedABI={parsedABI}
+                />
             }
         </div>
     );
