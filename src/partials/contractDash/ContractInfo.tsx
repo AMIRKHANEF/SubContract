@@ -1,30 +1,44 @@
 import Badge from "@/components/ui/Badge";
 import ScrollingTextBox from "@/components/ui/ScrollingTextBox";
 import { useNavigation } from "@/hooks/useStore";
-import { toShortAddress } from "@/utils/utils";
-import { BookOpen } from "lucide-react";
+import { getSubscanChainId, toShortAddress } from "@/utils/utils";
+import { BookOpen, ExternalLink } from "lucide-react";
 
 interface Props {
     contractName: string | undefined;
     contractAddress: string;
     isVerified: boolean;
+    genesisHash: string;
 }
 
-export default function ContractInfo({ contractAddress, contractName, isVerified }: Props) {
+export default function ContractInfo({ contractAddress, contractName, isVerified, genesisHash }: Props) {
     const { navigateTo } = useNavigation();
 
     return (
         <div className="flex flex-row justify-between">
             <div className="flex flex-col">
-                {contractName &&
+                {contractName ? (
                     <ScrollingTextBox
                         text={contractName}
-                        className="text-lmd font-bold"
+                        className="text-lmd font-bold text-accent-primary"
                         scrollOnHover
-                        width={230}
+                        width={220}
                     />
-                }
-                <p className="text-xsm font-light text-text-secondary">{toShortAddress(contractAddress, 6)}</p>
+                ) : (
+                    <span className="text-lmd font-bold text-text-muted italic">Unnamed Contract</span>
+                )}
+                {/* <p className="text-xs font-light text-text-secondary">{toShortAddress(contractAddress, 6)}</p> */}
+                <div className="flex items-center gap-1.5 mt-0.5">
+                    <p className="text-xs font-light text-text-secondary">{toShortAddress(contractAddress, 6)}</p>
+                    <a
+                        href={`https://${getSubscanChainId(genesisHash)}.subscan.io/address/${contractAddress}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-text-muted hover:text-accent-primary transition-colors"
+                    >
+                        <ExternalLink size={12} />
+                    </a>
+                </div>
             </div>
             <div className="flex flex-row items-center gap-1.5">
                 {isVerified &&

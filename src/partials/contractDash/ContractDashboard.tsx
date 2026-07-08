@@ -10,7 +10,7 @@ export default function ContractDashboard() {
 
     if (!activeContract) return null;
 
-    const { abi, activities, address, balances, info } = activeContract;
+    const { abi, activities, address, balances, info, chainGenesisHash } = activeContract;
 
     const isVerified = !!abi;
 
@@ -19,6 +19,7 @@ export default function ContractDashboard() {
             <ContractInfo
                 contractAddress={address}
                 contractName={info?.contractName}
+                genesisHash={chainGenesisHash}
                 isVerified={isVerified}
             />
             <ContractMetadata info={info} />
