@@ -30,7 +30,7 @@ export default function ContractABI() {
     return (
         <div className="section-container max-h-screen overflow-y-auto">
             <PageTitle
-                text="ABI Explorer"
+                text="Contract ABI"
                 Icon={BookText}
                 onBackButton={() => goHome()}
             />
