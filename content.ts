@@ -9,12 +9,6 @@ export const features = [
     popup: PopUps.GasHelper
   },
   {
-    title: 'Selector Lookup',
-    description: 'Decode selectors',
-    icon: '🔍',
-    popup: PopUps.SelectorLookUp
-  },
-  {
     title: 'Account Transform',
     description: 'SS58 ⇔ H-160',
     icon: '↔️',
