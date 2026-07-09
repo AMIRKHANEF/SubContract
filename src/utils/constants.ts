@@ -27,7 +27,7 @@ export const PASEO_ASSET_HUB_CHAIN: Chain = {
     token: "PAS",
     decimal: 10,
     ss58Format: 0
-}
+};
 
 export const SUPPORTED_CHAINS = [
     POLKADOT_ASSET_HUB_CHAIN,
@@ -38,7 +38,6 @@ export enum PopUps {
     None,
     ContractSettings,
     GasHelper,
-    SelectorLookUp,
     AbiViewer,
     AccountTransform
 }

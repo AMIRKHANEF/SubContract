@@ -6,8 +6,9 @@ import { useMemo } from 'react';
 import AbiExplore from './pages/AbiExplore';
 import { variants } from './styles/style';
 import ContractABI from './pages/ContractABI';
+import PrecompilesHub from './pages/PrecompilesHub';
 
-export default function App () {
+export default function App() {
   const { currentPage, direction } = useNavigation();
 
   const content = useMemo(() => {
@@ -15,12 +16,15 @@ export default function App () {
       case 'Home':
         return <Home />;
 
-        case 'AbiExplore':
+      case 'AbiExplore':
         return <AbiExplore />;
 
-        case 'ContractABI':
+      case 'ContractABI':
         return <ContractABI />;
-    
+
+      case 'PrecompilesHub':
+        return <PrecompilesHub />;
+
       default:
         return <Home />;
     }
