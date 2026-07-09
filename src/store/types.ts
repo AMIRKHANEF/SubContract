@@ -62,7 +62,7 @@ export interface AccountState {
     activeAccount: Account | null;
 }
 
-export type Page = "Home" | "AbiExplore" | "ContractABI";
+export type Page = "Home" | "AbiExplore" | "ContractABI" | "PrecompilesHub";
 export type Direction = 1 | -1; // 1 === "forward" & -1 === "back"
 
 export interface NavigationState {
