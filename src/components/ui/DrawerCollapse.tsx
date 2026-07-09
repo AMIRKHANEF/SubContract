@@ -15,8 +15,10 @@ export default function DrawerCollapse({ children, defaultOpen = false }: Props)
             {/* Fade background */}
             <div
                 onClick={() => setIsOpen(false)}
-                className="absolute inset-0 h-screen w-screen bg-black/15 backdrop-blur-[1.5px] z-1 fast-transition"
-                style={{ opacity: isOpen ? 100 : 0 }}
+                className={twMerge(
+                    "fixed inset-0 h-screen w-screen bg-black/15 backdrop-blur-[1.5px] z-1 fast-transition",
+                    isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+                )}
             />
             <div className="relative flex flex-col w-full">
                 {/* The absolute half circle toggle with top arrow */}
