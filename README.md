@@ -140,7 +140,7 @@ pnpm dev
 
 ## 🗺 Roadmap
 
-### v1 — Core Workspace *(current)*
+### v1 — Core Workspace *(90%)*
 The first release focuses on establishing the fundamental workflow: watch contracts, understand them, and have the right utility tools always at hand.
 
 - [x] Project scaffolding and architecture
@@ -148,24 +148,23 @@ The first release focuses on establishing the fundamental workflow: watch contra
 - [x] Contract watchlist with local persistence
 - [x] SS58 ↔ H160 address converter
 - [x] ABI viewer with search and copy
-- [ ] Contract dashboard (verification, deployer, stats)
-- [ ] Recent activity feed with decoded function names
-- [ ] Function selector decoder
-- [ ] Event topic hash lookup
-- [ ] Calldata decoder
-- [ ] Revert reason decoder
-- [ ] Gas & fee helper (DOT/USD)
+- [x] Contract dashboard (verification, deployer, stats)
+- [x] Recent activity feed with decoded function names
+- [x] Event topic hash lookup
+- [x] Calldata decoder
+- [x] Revert reason decoder
+- [x] Gas & fee helper (DOT/USD)
 - [ ] Existential deposit warning
 - [ ] Unit converters
-- [ ] Explorer shortcuts (SubScan)
+- [x] Explorer shortcuts (SubScan)
 
-### v2 — Deeper Tooling
-- [ ] Asset Hub precompile registry — browse and call native precompiles
+### v2 — Deeper Tooling *(current)*
+- [x] Asset Hub precompile registry — browse and call native precompiles
 - [ ] Watch-only account monitoring — track deployer wallets
 - [ ] ABI diff — compare interfaces between two contract addresses
 - [ ] Share contract link — pre-load a contract for a teammate via URL
-- [ ] Event log filtering by event type
-- [ ] Constructor arguments viewer
+- [x] Event log filtering by event type
+- [x] Constructor arguments viewer
 
 ### v3 — Polkadot-Native
 - [ ] XCM origin badge — visually flag cross-chain transactions
