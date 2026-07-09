@@ -1,5 +1,6 @@
 import AccountTransform from "@/partials/AccountTransform";
 import ContractSettings from "@/partials/ContractSettings";
+import GasHelper from "@/partials/GasHelper";
 import { PopUps } from "@/utils/constants";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { useMemo } from "react";
@@ -19,6 +20,9 @@ export default function PopUp({ popup, setPopup }: Props) {
 
             case PopUps.AccountTransform:
                 return <AccountTransform setPopup={setPopup} />
+
+            case PopUps.GasHelper:
+                return <GasHelper setPopup={setPopup} />
 
             default:
                 return <></>;
