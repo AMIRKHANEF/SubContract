@@ -17,8 +17,7 @@ export default function GasHelper({ setPopup }: { setPopup: React.Dispatch<React
     const [gasPrice, setGasPrice] = useState<string>("100");
 
     // Only holds a value once the user has typed a custom rate. Until then,
-    // the displayed rate is derived straight from dotPrice below — no need
-    // to copy it into state or an effect just to mirror it back out.
+    // the displayed rate is derived straight from dotPrice below.
     const [customUsdRate, setCustomUsdRate] = useState<string>("");
     const [isCustomRate, setIsCustomRate] = useState(false);
 
@@ -81,7 +80,7 @@ export default function GasHelper({ setPopup }: { setPopup: React.Dispatch<React
 
                 <div className="flex flex-col gap-1">
                     <div className="flex items-center justify-between">
-                        <label htmlFor="usd-rate" className="text-xs text-text-secondary">DOT Price (USD) - (Set 1 for PAS)</label>
+                        <label htmlFor="usd-rate" className="text-xs text-text-secondary">DOT Price (USD)</label>
                         {isCustomRate && dotPrice !== null && (
                             <button
                                 type="button"
