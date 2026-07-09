@@ -22,6 +22,15 @@ export const pages = [
     description: 'Inspect contract ABI',
     icon: '📦',
     path: "AbiExplore" as Page
+  },
+  {
+    title: 'Precompiles Hub',
+    description: 'Precompiled contracts',
+    icon: '📃',
+    path: "PrecompilesHub" as Page
+  }
+];
+
   }
 ];
 
