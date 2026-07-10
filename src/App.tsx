@@ -7,6 +7,7 @@ import AbiExplore from './pages/AbiExplore';
 import { variants } from './styles/style';
 import ContractABI from './pages/ContractABI';
 import PrecompilesHub from './pages/PrecompilesHub';
+import AbiDiff from './pages/AbiDiff';
 
 export default function App() {
   const { currentPage, direction } = useNavigation();
@@ -24,6 +25,9 @@ export default function App() {
 
       case 'PrecompilesHub':
         return <PrecompilesHub />;
+
+      case 'AbiDiff':
+        return <AbiDiff />;
 
       default:
         return <Home />;
