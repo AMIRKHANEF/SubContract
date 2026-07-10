@@ -162,11 +162,10 @@ The first release focuses on establishing the fundamental workflow: watch contra
 - [x] Asset Hub precompile registry — browse and call native precompiles
 - [ ] Watch-only account monitoring — track deployer wallets
 - [ ] ABI diff — compare interfaces between two contract addresses
-- [ ] Share contract link — pre-load a contract for a teammate via URL
 - [x] Event log filtering by event type
 - [x] Constructor arguments viewer
 
-### v3 — Polkadot-Native
+### v3 — Developer Workflow Automation
 - [ ] XCM origin badge — visually flag cross-chain transactions
 - [ ] Local activity alerts via Chrome notifications
 - [ ] Hardhat / Foundry plugin — auto-register deployed contracts
