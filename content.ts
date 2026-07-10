@@ -28,6 +28,12 @@ export const pages = [
     description: 'Precompiled contracts',
     icon: '📃',
     path: "PrecompilesHub" as Page
+  },
+  {
+    title: 'ABI Diff Tool',
+    description: 'Compare contract interfaces',
+    icon: '⚖️',
+    path: "AbiDiff" as Page
   }
 ];
 
